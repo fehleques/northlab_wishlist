@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { PhaseItem } from '../PhaseItem/PhaseItem';
 import styles from './RoadmapCard.module.scss';
 
