@@ -11,7 +11,7 @@ import { Footer } from "./components/Footer/Footer";
 import { ThreeDBackground } from "./components/ThreeDBackground/ThreeDBackground";
 import "./styles/globals.scss";
 
-// Register GSAP plugins
+// Register GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 type Theme = 'light' | 'dark';
