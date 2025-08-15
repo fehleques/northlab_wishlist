@@ -1,0 +1,55 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+// Mock Supabase client creation to return a plain object we can manipulate
+vi.mock('@supabase/supabase-js', () => ({
+  createClient: () => ({})
+}));
+
+import { addEmailToWaitlist, supabase } from './waitlistService';
+
+// Stubbed methods for the Supabase client
+const maybeSingle = vi.fn();
+const eq = vi.fn(() => ({ maybeSingle }));
+const select = vi.fn(() => ({ eq }));
+const single = vi.fn();
+const selectAfterInsert = vi.fn(() => ({ single }));
+const insert = vi.fn(() => ({ select: selectAfterInsert }));
+const from = vi.fn(() => ({ select, insert }));
+
+// Attach the mocked `from` method to the Supabase client
+(supabase as any).from = from;
+
+describe('addEmailToWaitlist', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    maybeSingle.mockReset();
+    single.mockReset();
+  });
+
+  it('returns success for valid email insertion', async () => {
+    maybeSingle.mockResolvedValueOnce({ data: null, error: null });
+    single.mockResolvedValueOnce({ data: { email: 'test@example.com' }, error: null });
+
+    const result = await addEmailToWaitlist('test@example.com');
+
+    expect(result.success).toBe(true);
+    expect(result.message).toBe("Welcome aboard! You'll receive updates as we build.");
+  });
+
+  it('returns duplicate warning for existing email', async () => {
+    maybeSingle.mockResolvedValueOnce({ data: { email: 'test@example.com' }, error: null });
+
+    const result = await addEmailToWaitlist('test@example.com');
+
+    expect(result.success).toBe(false);
+    expect(result.message).toBe('This email is already on our waitlist.');
+  });
+
+  it('returns validation error for invalid email', async () => {
+    const result = await addEmailToWaitlist('invalid-email');
+
+    expect(result.success).toBe(false);
+    expect(result.message).toBe('Please enter a valid email address.');
+    expect(from).not.toHaveBeenCalled();
+  });
+});
