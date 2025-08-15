@@ -44,7 +44,14 @@ export async function addEmailToWaitlist(
       .eq('email', email.toLowerCase())
       .maybeSingle();
 
-    if (checkError && checkError.code !== 'PGRST116') {
+    if (checkError?.code === 'PGRST116') {
+      return {
+        success: false,
+        message: 'This email is already on our waitlist.'
+      };
+    }
+
+    if (checkError) {
       console.error('Error checking existing email:', checkError);
       return {
         success: false,
