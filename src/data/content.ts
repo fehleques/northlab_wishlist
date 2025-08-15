@@ -40,7 +40,7 @@ export const roadmapContent = {
     next: {
       title: "Next", 
       items: [
-        "Bias resistant reviews and skill leveling",
+        "Bias-resistant reviews and skill leveling",
         "Team spaces and project delivery boards"
       ]
     },
