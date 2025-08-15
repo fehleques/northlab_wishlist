@@ -25,12 +25,15 @@ export interface WaitlistResponse {
  * Add an email to the waitlist
  */
 export async function addEmailToWaitlist(
-  email: string, 
+  email: string,
   source: string = 'website'
 ): Promise<WaitlistResponse> {
   try {
+    // Normalize email by trimming whitespace and lowercasing
+    const normalizedEmail = email.trim().toLowerCase();
+
     // Validate email format
-    if (!isValidEmail(email)) {
+    if (!isValidEmail(normalizedEmail)) {
       return {
         success: false,
         message: 'Please enter a valid email address.'
@@ -41,7 +44,7 @@ export async function addEmailToWaitlist(
     const { data: existingEntry, error: checkError } = await supabase
       .from('waitlist')
       .select('email')
-      .eq('email', email.toLowerCase())
+      .eq('email', normalizedEmail)
       .maybeSingle();
 
     if (checkError && checkError.code !== 'PGRST116') {
@@ -64,7 +67,7 @@ export async function addEmailToWaitlist(
       .from('waitlist')
       .insert([
         {
-          email: email.toLowerCase(),
+          email: normalizedEmail,
           source: source
         }
       ])
