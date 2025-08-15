@@ -1,0 +1,182 @@
+.about {
+  border-top: 1px solid var(--color-border-primary);
+  position: relative;
+  z-index: var(--z-0);
+  padding-top: var(--spacing-6);
+  padding-bottom: var(--spacing-8);
+}
+
+.aboutContent {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: var(--spacing-6);
+  text-align: center;
+  
+  @media (min-width: $lg) {
+    margin-bottom: var(--spacing-8);
+  }
+}
+
+.aboutTitle {
+  font-size: var(--font-size-5xl);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2-5);
+  text-wrap: balance;
+  line-height: var(--line-height-tight);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  
+  @media (min-width: $sm) {
+    font-size: var(--font-size-5xl);
+  }
+}
+
+.aboutDescription {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 65ch;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  margin-bottom: var(--spacing-1-5);
+  
+  @media (min-width: $sm) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.aboutDescriptionFinal {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-tertiary);
+  max-width: 65ch;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  font-weight: 500;
+  
+  @media (min-width: $sm) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.aboutBenefits {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--spacing-2);
+  width: 100%;
+  max-width: 100%;
+  
+  @media (min-width: $sm) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2-5);
+  }
+  
+  @media (min-width: $lg) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-3);
+  }
+}
+
+.benefitItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-3);
+  background: rgba(var(--color-surface-primary-rgb), 0.8);
+  border-radius: var(--border-radius-3xl);
+  border: 1px solid var(--color-border-primary);
+  backdrop-filter: blur(var(--blur-sm));
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 200px;
+  cursor: pointer;
+  
+  &:hover {
+    background: linear-gradient(135deg, 
+      rgba(var(--color-indigo-500-rgb), 0.15) 0%,
+      rgba(var(--color-sky-500-rgb), 0.1) 50%,
+      rgba(var(--color-surface-primary-rgb), 0.9) 100%
+    );
+    border-color: rgba(var(--color-indigo-400-rgb), 0.4);
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.2),
+      0 10px 10px -5px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(var(--color-indigo-400-rgb), 0.2),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    
+    .benefitArrow {
+      opacity: 1;
+      transform: translate(2px, -2px);
+      color: var(--color-indigo-400);
+    }
+    
+    .benefitIcon {
+      color: var(--color-indigo-400);
+      transform: scale(1.1);
+    }
+  }
+}
+
+.benefitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--spacing-2);
+  color: var(--color-text-secondary);
+  transition: all 0.3s ease-out;
+  flex-shrink: 0;
+}
+
+.benefitTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-1-5);
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  flex-shrink: 0;
+}
+
+.benefitDescription {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+}
+
+.benefitArrow {
+  position: absolute;
+  bottom: var(--spacing-2-5);
+  right: var(--spacing-2-5);
+  color: var(--color-text-tertiary);
+  opacity: 0.6;
+  transition: all 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
