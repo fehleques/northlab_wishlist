@@ -1,5 +1,5 @@
-import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
+import React, { useRef } from 'react';
+import { Canvas, useFrame, useThree, extend, Object3DNode } from '@react-three/fiber';
 import * as THREE from 'three';
 import styles from './ThreeDBackground.module.scss';
 
@@ -131,9 +131,13 @@ extend({ TVStaticShaderMaterial });
 
 // Declare the extended material for TypeScript
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      tVStaticShaderMaterial: any;
+      tVStaticShaderMaterial: Object3DNode<
+        TVStaticShaderMaterial,
+        typeof TVStaticShaderMaterial
+      >;
     }
   }
 }

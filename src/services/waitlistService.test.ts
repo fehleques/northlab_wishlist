@@ -17,7 +17,7 @@ const insert = vi.fn(() => ({ select: selectAfterInsert }));
 const from = vi.fn(() => ({ select, insert }));
 
 // Attach the mocked `from` method to the Supabase client
-(supabase as any).from = from;
+(supabase as unknown as { from: typeof from }).from = from;
 
 describe('addEmailToWaitlist', () => {
   beforeEach(() => {
