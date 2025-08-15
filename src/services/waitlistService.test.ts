@@ -52,4 +52,16 @@ describe('addEmailToWaitlist', () => {
     expect(result.message).toBe('Please enter a valid email address.');
     expect(from).not.toHaveBeenCalled();
   });
+
+  it('normalizes email before submission', async () => {
+    maybeSingle.mockResolvedValueOnce({ data: null, error: null });
+    single.mockResolvedValueOnce({ data: { email: 'trim@example.com' }, error: null });
+
+    await addEmailToWaitlist('  Trim@Example.com  ');
+
+    expect(eq).toHaveBeenCalledWith('email', 'trim@example.com');
+    expect(insert).toHaveBeenCalledWith([
+      { email: 'trim@example.com', source: 'website' }
+    ]);
+  });
 });
