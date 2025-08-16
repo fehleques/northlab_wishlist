@@ -4,7 +4,7 @@
 }
 
 @mixin gradient-primary {
-  background: linear-gradient(to right, var(--color-indigo-400), var(--color-sky-400));
+  background: var(--gradient-primary);
 }
 
 @mixin text-balance {
