@@ -14,6 +14,8 @@ export const NorthLabLockup: React.FC<NorthLabLockupProps> = ({
     <svg
       role={ariaLabel ? 'img' : undefined}
       aria-label={ariaLabel}
+      aria-hidden={ariaLabel ? undefined : true}
+      focusable={ariaLabel ? undefined : false}
       width="389.18"
       height="57.12"
       viewBox="0.34 0.88 389.18 57.12"
