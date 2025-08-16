@@ -22,7 +22,7 @@
   word-wrap: break-word;
   hyphens: auto;
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     font-size: var(--font-size-6);
   }
 }
@@ -37,7 +37,7 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     font-size: var(--font-size-5);
   }
 }

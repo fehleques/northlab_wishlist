@@ -29,7 +29,7 @@
   display: none;
   flex-shrink: 0;
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
@@ -40,5 +40,10 @@
     flex-wrap: wrap;
     overflow-wrap: break-word;
     word-wrap: break-word;
+  }
+
+  @media (min-width: $lg) {
+    gap: var(--spacing-3);
+    font-size: var(--font-size-3);
   }
 }

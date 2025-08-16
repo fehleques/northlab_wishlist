@@ -11,7 +11,7 @@
   min-width: 0;
   overflow: hidden;
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     flex-direction: row;
     gap: var(--spacing-1-5);
   }
@@ -41,7 +41,7 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     height: calc(var(--spacing-2-5) + var(--spacing-0-5));
   }
   
@@ -75,7 +75,7 @@
   box-sizing: border-box;
   animation: gradientMove 6s ease-in-out infinite;
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     height: calc(var(--spacing-2-5) + var(--spacing-0-5));
   }
   

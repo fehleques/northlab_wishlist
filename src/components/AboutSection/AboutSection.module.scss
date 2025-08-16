@@ -30,7 +30,7 @@
   hyphens: auto;
   max-width: 100%;
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     font-size: var(--font-size-6);
   }
 }
@@ -46,7 +46,7 @@
   word-wrap: break-word;
   margin-bottom: var(--spacing-1-5);
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     font-size: var(--font-size-5);
   }
 }
@@ -62,7 +62,7 @@
   word-wrap: break-word;
   font-weight: 500;
   
-  @media (min-width: $sm) {
+  @media (min-width: $md) {
     font-size: var(--font-size-5);
   }
 }
@@ -76,14 +76,17 @@
   
   @media (min-width: $sm) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: $md) {
     gap: var(--spacing-2-5);
   }
-  
+
   @media (min-width: $lg) {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-3);
   }
-}
+  }
 
 .benefitItem {
   position: relative;
