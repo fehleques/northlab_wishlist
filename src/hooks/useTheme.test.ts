@@ -34,6 +34,29 @@ describe('useTheme', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
   });
 
+  it('responds to system preference changes without saved theme', () => {
+    let listener: ((e: MediaQueryListEvent) => void) | null = null;
+    window.matchMedia = vi.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addEventListener: vi.fn((_, cb) => {
+        listener = cb;
+      }),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }));
+
+    const { result } = renderHook(() => useTheme());
+    expect(result.current.theme).toBe('light');
+
+    act(() => {
+      listener?.({ matches: true } as MediaQueryListEvent);
+    });
+
+    expect(result.current.theme).toBe('dark');
+  });
+
   it('toggles theme and persists preference', () => {
     window.matchMedia = setupMatchMedia(false);
     const { result } = renderHook(() => useTheme());
