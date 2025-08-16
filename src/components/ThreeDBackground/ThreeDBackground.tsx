@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree, extend, Object3DNode } from '@react-three/fiber';
 import * as THREE from 'three';
 import styles from './ThreeDBackground.module.scss';
@@ -7,7 +7,25 @@ interface ThreeDBackgroundProps {
   mouseX: number;
   mouseY: number;
   prefersReducedMotion?: boolean;
+  /**
+   * Force-disable the 3D background and always show the CSS gradient fallback.
+   * Useful for testing or to avoid using WebGL on low-power devices.
+   */
+  disable3D?: boolean;
 }
+
+// Detect WebGL support in the current environment
+const isWebGLAvailable = (): boolean => {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+    );
+  } catch {
+    return false;
+  }
+};
 
 // TV Static shader material for fine-grained noise
 class TVStaticShaderMaterial extends THREE.ShaderMaterial {
@@ -211,25 +229,45 @@ const Scene: React.FC<{
   );
 };
 
+/**
+ * Animated TV static background. Renders a WebGL scene when possible and
+ * falls back to a static CSS gradient when WebGL is unsupported or when the
+ * `disable3D` prop is set.
+ */
 export const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
   mouseX,
   mouseY,
-  prefersReducedMotion = false
+  prefersReducedMotion = false,
+  disable3D = false
 }) => {
+  const [webglSupported, setWebglSupported] = useState(false);
+
+  useEffect(() => {
+    setWebglSupported(isWebGLAvailable());
+  }, []);
+
+  const shouldRenderCanvas = webglSupported && !disable3D;
+
   return (
     <div className={styles.backgroundContainer}>
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 60 }}
-        gl={{
-          antialias: false,
-          alpha: true,
-          powerPreference: "high-performance"
-        }}
-      >
-        <Scene mouseX={mouseX} mouseY={mouseY} prefersReducedMotion={prefersReducedMotion} />
-      </Canvas>
+      {shouldRenderCanvas && (
+        <Canvas
+          camera={{ position: [0, 0, 5], fov: 60 }}
+          gl={{
+            antialias: false,
+            alpha: true,
+            powerPreference: "high-performance",
+          }}
+        >
+          <Scene
+            mouseX={mouseX}
+            mouseY={mouseY}
+            prefersReducedMotion={prefersReducedMotion}
+          />
+        </Canvas>
+      )}
 
-      {/* Subtle overlay for additional depth */}
+      {/* Subtle overlay for additional depth or fallback gradient */}
       <div className={styles.overlay} />
     </div>
   );
