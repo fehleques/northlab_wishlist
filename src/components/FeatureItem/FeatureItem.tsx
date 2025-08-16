@@ -10,7 +10,7 @@ export const FeatureItem: React.FC<FeatureItemProps> = ({ children, className = 
   return (
     <div className={`${styles.featureItem} group feature-item ${className}`}>
       <div className={styles.dot} />
-      <span className={styles.text}>{children}</span>
+      <span className={`${styles.text} typography-body-lg`}>{children}</span>
     </div>
   );
 };

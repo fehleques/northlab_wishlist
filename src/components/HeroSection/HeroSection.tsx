@@ -30,7 +30,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className={`${styles.heroContent} ${isLoaded ? styles.loaded : ''}`}>
             <h1
               ref={headlineRef}
-              className={styles.headline}
+              className={`${styles.headline} typography-h1`}
               style={{
                 transform: `rotateX(${globalRotateX * -0.3}deg) rotateY(${globalRotateY * -0.3}deg) translateZ(20px)`,
               }}
@@ -38,9 +38,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               The future of independent creators has a new North. Yours.
             </h1>
             
-            <p 
+            <p
               ref={descriptionRef}
-              className={styles.description}
+              className={`${styles.description} typography-body-lg`}
               style={{
                 transform: `rotateX(${globalRotateX * -0.2}deg) rotateY(${globalRotateY * -0.2}deg) translateZ(10px)`,
               }}

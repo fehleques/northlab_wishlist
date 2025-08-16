@@ -10,7 +10,7 @@ export const PhaseItem: React.FC<PhaseItemProps> = ({ children, dotColor = 'indi
   return (
     <div className={`${styles.phaseItem} phase-item`}>
       <div className={`${styles.dot} ${styles[`dot${dotColor.charAt(0).toUpperCase() + dotColor.slice(1)}`]}`} />
-      <span className={styles.text}>{children}</span>
+      <span className={`${styles.text} typography-body`}>{children}</span>
     </div>
   );
 };

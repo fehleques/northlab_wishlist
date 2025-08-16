@@ -75,7 +75,7 @@ export const RoadmapCard: React.FC<RoadmapCardProps> = ({
           }}
         >
           <div ref={phaseNowRef} className={styles.phase}>
-            <div className={styles.phaseTitle}>Now</div>
+            <div className={`${styles.phaseTitle} typography-overline`}>Now</div>
             <div className={styles.phaseItems}>
               <PhaseItem dotColor="indigo">
                 Closed alpha with core creative memory and brief engine
@@ -87,7 +87,7 @@ export const RoadmapCard: React.FC<RoadmapCardProps> = ({
           </div>
           
           <div ref={phaseNextRef} className={styles.phase}>
-            <div className={styles.phaseTitle}>Next</div>
+            <div className={`${styles.phaseTitle} typography-overline`}>Next</div>
             <div className={styles.phaseItems}>
               <PhaseItem dotColor="sky">
                 Bias resistant reviews and skill leveling
@@ -99,7 +99,7 @@ export const RoadmapCard: React.FC<RoadmapCardProps> = ({
           </div>
           
           <div ref={phaseLaterRef} className={styles.phase}>
-            <div className={styles.phaseTitle}>Later</div>
+            <div className={`${styles.phaseTitle} typography-overline`}>Later</div>
             <div className={`${styles.phaseItems} ${styles.phaseItemsLater}`}>
               <PhaseItem dotColor="neutral">
                 Marketplace with verified talent tiers

@@ -25,16 +25,16 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ aboutRef }) => {
     <section ref={aboutRef} id="about" className={styles.about}>
       <Container>
         <div className={styles.aboutContent}>
-          <h2 className={`${styles.aboutTitle} animate-element`}>
+          <h2 className={`${styles.aboutTitle} typography-h2 animate-element`}>
             You've been building in the wild
           </h2>
-          <p className={`${styles.aboutDescription} animate-element`}>
+          <p className={`${styles.aboutDescription} typography-body-lg animate-element`}>
             If you're a freelancer or creator, you know the grind isn't just the work. It's finding direction, the right opportunities, and the people who truly get what you do.
           </p>
-          <p className={`${styles.aboutDescription} animate-element`}>
+          <p className={`${styles.aboutDescription} typography-body-lg animate-element`}>
             NorthLab exists to make that part effortless. We're building a platform that's both your creative workspace and your source of direction, helping you test ideas, get trusted feedback, and see your next move before it's obvious.
           </p>
-          <p className={`${styles.aboutDescriptionFinal} animate-element`}>
+          <p className={`${styles.aboutDescriptionFinal} typography-body-lg animate-element`}>
             All in one place, designed for people who want more control over their creative journey.
           </p>
         </div>
@@ -45,8 +45,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ aboutRef }) => {
               <div className={styles.benefitIcon}>
                 {getIcon(benefit.icon)}
               </div>
-              <h3 className={styles.benefitTitle}>{benefit.title}</h3>
-              <p className={styles.benefitDescription}>{benefit.description}</p>
+              <h3 className={`${styles.benefitTitle} typography-label`}>{benefit.title}</h3>
+              <p className={`${styles.benefitDescription} typography-body`}>{benefit.description}</p>
               <div className={styles.benefitArrow}>
                 <ArrowUpRight size={20} />
               </div>

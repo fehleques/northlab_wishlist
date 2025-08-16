@@ -12,34 +12,20 @@
 }
 
 .faqTitle {
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text-primary);
   margin-bottom: var(--spacing-2);
-  line-height: var(--line-height-tight);
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-wrap: balance;
   max-width: 100%;
-  
-  @media (min-width: $sm) {
-    font-size: var(--font-size-2xl);
-  }
 }
 
 .faqDescription {
-  font-size: var(--font-size-lg);
   color: var(--color-text-tertiary);
   max-width: var(--max-w-2xl);
   margin: 0 auto;
-  line-height: var(--line-height-relaxed);
   overflow-wrap: break-word;
   word-wrap: break-word;
-  
-  @media (min-width: $sm) {
-    font-size: var(--font-size-xl);
-  }
 }
 
 .faqList {
@@ -92,20 +78,14 @@
 }
 
 .faqQuestion {
-  font-size: var(--font-size-base);
   font-weight: 500;
   color: var(--color-text-primary);
-  line-height: var(--line-height-relaxed);
   padding-right: var(--spacing-1);
   overflow-wrap: break-word;
   word-wrap: break-word;
   hyphens: auto;
   flex: 1;
   min-width: 0;
-  
-  @media (min-width: $sm) {
-    font-size: var(--font-size-lg);
-  }
 }
 
 .faqIcon {
@@ -132,12 +112,10 @@
 .faqAnswerContent {
   padding: 0 var(--spacing-2) var(--spacing-2) var(--spacing-2);
   color: var(--color-text-secondary);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-relaxed);
   overflow-wrap: break-word;
   word-wrap: break-word;
   max-width: 100%;
-  
+
   @media (min-width: $sm) {
     padding: 0 var(--spacing-2-5) var(--spacing-2-5) var(--spacing-2-5);
   }

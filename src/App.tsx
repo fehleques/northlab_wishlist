@@ -10,6 +10,7 @@ import { CommunitySection } from "./components/CommunitySection/CommunitySection
 import { FAQSection } from "./components/FAQSection/FAQSection";
 import { Footer } from "./components/Footer/Footer";
 import { ThreeDBackground } from "./components/ThreeDBackground/ThreeDBackground";
+import { ParallaxBackground } from "./components/ParallaxBackground/ParallaxBackground";
 import "./styles/globals.scss";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
 
@@ -310,6 +311,7 @@ export default function NorthLabComingSoon() {
       onMouseMove={handleGlobalMouseMove}
       onMouseLeave={handleGlobalMouseLeave}
     >
+      <ParallaxBackground />
       <ThreeDBackground
         mouseX={mousePosition.x}
         mouseY={mousePosition.y}
