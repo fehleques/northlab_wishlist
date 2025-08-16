@@ -264,7 +264,7 @@ export default function NorthLabComingSoon() {
 
     gsap.ticker.lagSmoothing(0);
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setIsLoaded(true);
       if (!prefersReducedMotion) {
         initScrollAnimations();
@@ -272,6 +272,7 @@ export default function NorthLabComingSoon() {
     }, 300);
 
     return () => {
+      clearTimeout(timeoutId);
       lenis.destroy();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };

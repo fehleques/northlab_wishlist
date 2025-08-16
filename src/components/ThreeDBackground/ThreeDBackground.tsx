@@ -50,7 +50,7 @@ export const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
   return (
     <div className={styles.backgroundContainer}>
       {shouldRenderCanvas ? (
-        <Suspense fallback={null}>
+        <Suspense fallback={<div className={styles.noiseFallback} />}>
           <ThreeDCanvas
             mouseX={mouseX}
             mouseY={mouseY}
