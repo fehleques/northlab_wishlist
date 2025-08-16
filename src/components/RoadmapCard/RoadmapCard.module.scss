@@ -73,7 +73,7 @@
 }
 
 .phaseTitle {
-  font-size: var(--font-size-2);
+  @extend .x-fs-normal;
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text-tertiary);

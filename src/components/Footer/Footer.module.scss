@@ -25,7 +25,7 @@
 }
 
 .copyright {
-  font-size: var(--font-size-2);
+  @extend .x-fs-normal;
   color: var(--color-text-tertiary);
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  font-size: var(--font-size-2);
+  @extend .x-fs-normal;
   color: var(--color-text-tertiary);
   flex-wrap: wrap;
   flex-shrink: 0;

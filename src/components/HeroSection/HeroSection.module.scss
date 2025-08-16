@@ -27,7 +27,7 @@
 }
 
 .headline {
-  font-size: var(--font-size-6);
+  @extend .x-hs-large;
   font-weight: 700;
   letter-spacing: var(--letter-spacing-tighter);
   line-height: var(--line-height-tight);
@@ -53,7 +53,7 @@
 
 .description {
   margin-top: var(--spacing-1);
-  font-size: var(--font-size-5);
+  @extend .x-hs-normal;
   line-height: var(--line-height-relaxed);
   color: var(--color-text-secondary);
   max-width: var(--max-w-2xl);
@@ -62,7 +62,7 @@
   transform-style: preserve-3d;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  
+
   .line {
     display: block;
   }

@@ -38,7 +38,7 @@
   color: var(--color-text-primary);
   outline: none;
   transition: all 0.2s ease-out;
-  font-size: var(--font-size-3);
+  @extend .x-fs-large;
   box-sizing: border-box;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -70,7 +70,7 @@
   transition: all 0.2s ease-out;
   border: none;
   cursor: pointer;
-  font-size: var(--font-size-3);
+  @extend .x-fs-large;
   white-space: nowrap;
   flex-shrink: 0;
   min-width: fit-content;
@@ -111,7 +111,7 @@
 
 .message {
   margin-top: var(--spacing-1-5);
-  font-size: var(--font-size-2);
+  @extend .x-fs-normal;
   font-weight: 500;
   transition: all 0.3s ease-out;
   
@@ -126,7 +126,7 @@
 
 .disclaimer {
   margin-top: var(--spacing-2);
-  font-size: var(--font-size-2);
+  @extend .x-fs-normal;
   color: var(--color-text-tertiary);
   line-height: var(--line-height-relaxed);
 }

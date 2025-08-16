@@ -19,6 +19,6 @@
 
 .text {
   color: var(--color-text-secondary);
-  font-size: var(--font-size-4);
+  @extend .x-hs-small;
   line-height: var(--line-height-relaxed);
 }

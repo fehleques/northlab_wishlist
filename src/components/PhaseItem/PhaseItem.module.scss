@@ -24,6 +24,6 @@
 }
 
 .text {
-  font-size: var(--font-size-3);
+  @extend .x-fs-large;
   line-height: var(--line-height-relaxed);
 }
