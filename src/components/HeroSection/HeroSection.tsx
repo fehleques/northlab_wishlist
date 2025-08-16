@@ -1,5 +1,5 @@
 import React from "react"
-import { Container } from "../Container/Container"
+import { Container } from "../primitives/Container"
 import { FeatureItem } from "../FeatureItem/FeatureItem"
 import { WaitlistForm } from "../WaitlistForm/WaitlistForm"
 import { heroContent } from "../../data/content"
