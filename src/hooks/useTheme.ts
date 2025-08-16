@@ -6,24 +6,35 @@ const STORAGE_KEY = 'northlab-theme';
 
 export function useTheme() {
   const getInitialTheme = (): Theme => {
-    const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
-    if (saved) {
-      return saved;
+    if (typeof window !== 'undefined') {
+      const saved = window.localStorage?.getItem(STORAGE_KEY) as Theme | null;
+      if (saved) {
+        return saved;
+      }
+      const prefersDark = window
+        .matchMedia?.('(prefers-color-scheme: dark)')
+        ?.matches;
+      if (prefersDark !== undefined) {
+        return prefersDark ? 'dark' : 'light';
+      }
     }
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return prefersDark ? 'dark' : 'light';
+    return 'light';
   };
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    if (typeof window !== 'undefined') {
+      window.document.documentElement.setAttribute('data-theme', theme);
+    }
   }, [theme]);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia?.('(prefers-color-scheme: dark)');
+    if (!mediaQuery) return;
     const handler = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem(STORAGE_KEY)) {
+      if (!window.localStorage?.getItem(STORAGE_KEY)) {
         setTheme(e.matches ? 'dark' : 'light');
       }
     };
@@ -34,7 +45,9 @@ export function useTheme() {
   const toggleTheme = () => {
     const newTheme: Theme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
-    localStorage.setItem(STORAGE_KEY, newTheme);
+    if (typeof window !== 'undefined') {
+      window.localStorage?.setItem(STORAGE_KEY, newTheme);
+    }
   };
 
   return { theme, toggleTheme } as const;
