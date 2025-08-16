@@ -4,8 +4,11 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Create Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create Supabase client if credentials are available
+export const supabase =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
 
 // Types
 export interface WaitlistEntry {
@@ -29,6 +32,14 @@ export async function addEmailToWaitlist(
   source: string = 'website'
 ): Promise<WaitlistResponse> {
   try {
+    if (!supabase) {
+      console.error('Supabase client unavailable: missing credentials');
+      return {
+        success: false,
+        message: 'Waitlist is currently unavailable. Please try again later.'
+      };
+    }
+
     // Normalize email by trimming whitespace and lowercasing
     const normalizedEmail = email.trim().toLowerCase();
 
@@ -111,6 +122,11 @@ export async function addEmailToWaitlist(
  */
 export async function getWaitlistStats() {
   try {
+    if (!supabase) {
+      console.error('Supabase client unavailable: missing credentials');
+      return { count: 0, error: 'Supabase client unavailable' };
+    }
+
     const { count, error } = await supabase
       .from('waitlist')
       .select('*', { count: 'exact', head: true });

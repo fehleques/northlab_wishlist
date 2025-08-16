@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addEmailToWaitlist } from '../../services/waitlistService';
+import { addEmailToWaitlist, supabase } from '../../services/waitlistService';
 import styles from './WaitlistForm.module.scss';
 
 export const WaitlistForm: React.FC = () => {
@@ -9,15 +9,21 @@ export const WaitlistForm: React.FC = () => {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    
+
     if (!email.trim()) {
       setStatus("error");
       setMsg("Please enter your email address.");
       return;
     }
-    
+
+    if (!supabase) {
+      setStatus("error");
+      setMsg("Waitlist signups are currently unavailable. Please try again later.");
+      return;
+    }
+
     setMsg("");
-    
+
     setStatus("loading");
 
     try {

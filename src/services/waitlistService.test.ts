@@ -1,11 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 
 // Mock Supabase client creation to return a plain object we can manipulate
 vi.mock('@supabase/supabase-js', () => ({
-  createClient: () => ({})
+  createClient: vi.fn(() => ({}))
 }));
-
-import { addEmailToWaitlist, supabase } from './waitlistService';
+import { createClient } from '@supabase/supabase-js';
 
 // Stubbed methods for the Supabase client
 const maybeSingle = vi.fn();
@@ -16,11 +15,21 @@ const selectAfterInsert = vi.fn(() => ({ single }));
 const insert = vi.fn(() => ({ select: selectAfterInsert }));
 const from = vi.fn(() => ({ select, insert }));
 
-// Attach the mocked `from` method to the Supabase client
-(supabase as unknown as { from: typeof from }).from = from;
+let addEmailToWaitlist: typeof import('./waitlistService')['addEmailToWaitlist'];
+let supabase: unknown;
 
 describe('addEmailToWaitlist', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    vi.resetModules();
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://example.com');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'anon');
+
+    const mod = await import('./waitlistService');
+    addEmailToWaitlist = mod.addEmailToWaitlist;
+    supabase = mod.supabase;
+
+    (supabase as unknown as { from: typeof from }).from = from;
+
     vi.clearAllMocks();
     maybeSingle.mockReset();
     single.mockReset();
@@ -63,5 +72,29 @@ describe('addEmailToWaitlist', () => {
     expect(insert).toHaveBeenCalledWith([
       { email: 'trim@example.com', source: 'website' }
     ]);
+  });
+});
+
+describe('addEmailToWaitlist with missing credentials', () => {
+  it('returns an error and does not call Supabase when credentials are missing', async () => {
+    vi.resetModules();
+    const createClientMock = createClient as unknown as Mock;
+    createClientMock.mockClear();
+    vi.stubEnv('VITE_SUPABASE_URL', '');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', '');
+
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const { addEmailToWaitlist, supabase } = await import('./waitlistService');
+
+    const result = await addEmailToWaitlist('test@example.com');
+
+    expect(createClientMock).not.toHaveBeenCalled();
+    expect(supabase).toBeNull();
+    expect(result.success).toBe(false);
+    expect(result.message).toBe('Waitlist is currently unavailable. Please try again later.');
+    expect(consoleSpy).toHaveBeenCalledWith('Supabase client unavailable: missing credentials');
+
+    consoleSpy.mockRestore();
   });
 });
