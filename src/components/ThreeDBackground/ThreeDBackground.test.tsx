@@ -27,8 +27,9 @@ describe('ThreeDBackground', () => {
 
     const overlay = container.querySelector(`.${styles.overlay}`);
     expect(overlay).not.toBeNull();
-    // The overlay element uses a CSS class that applies the gradient fallback
     expect((overlay as HTMLElement).className).toContain(styles.overlay);
+
+    const noise = container.querySelector(`.${styles.noiseFallback}`);
+    expect(noise).not.toBeNull();
   });
 });
-

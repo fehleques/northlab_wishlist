@@ -1,6 +1,5 @@
-// Import SCSS partials
-@import 'variables';
-@import 'mixins';
+// Import SCSS modules
+@use './index' as *;
 
 // Global styles and CSS custom properties
 :root {
@@ -40,9 +39,10 @@
   --color-emerald-400-rgb: 52, 211, 153;
   
   // Semantic color variables (Dark theme default)
-  --color-background: var(--color-neutral-950);
-  --color-surface-primary: var(--color-neutral-900);
-  --color-surface-secondary: var(--color-neutral-800);
+  // Deeper hues with faint blue/purple accents
+  --color-background: #050510;
+  --color-surface-primary: #0b0b1a;
+  --color-surface-secondary: #141426;
   --color-text-primary: var(--color-neutral-50);
   --color-text-secondary: var(--color-neutral-400);
   --color-text-tertiary: var(--color-neutral-500);
@@ -52,9 +52,16 @@
   --color-accent-secondary: var(--color-sky-400);
   
   // RGB versions for semantic colors
-  --color-background-rgb: var(--color-neutral-950-rgb);
-  --color-surface-primary-rgb: var(--color-neutral-900-rgb);
-  --color-surface-secondary-rgb: var(--color-neutral-800-rgb);
+  --color-background-rgb: 5, 5, 16;
+  --color-surface-primary-rgb: 11, 11, 26;
+  --color-surface-secondary-rgb: 20, 20, 38;
+
+  // Subtle primary gradient
+  --gradient-primary: linear-gradient(
+    135deg,
+    rgba(var(--color-indigo-500-rgb), 0.25),
+    rgba(var(--color-sky-500-rgb), 0.25)
+  );
   
   // Spacing scale (based on 0.25rem = 4px)
   --spacing-0-25: 0.25rem;   // 4px
@@ -163,7 +170,7 @@ html {
     background-position: 0% 50%;
   }
   50% {
-    background-position: 100% 50%;
+    background-position: 50% 50%;
   }
   100% {
     background-position: 0% 50%;
