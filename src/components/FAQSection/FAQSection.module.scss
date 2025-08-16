@@ -1,5 +1,5 @@
 .faq {
-  border-top: 1px solid var(--color-border-primary);
+  border-top: var(--border-width-sm) solid var(--color-border-primary);
   position: relative;
   z-index: var(--z-0);
   padding-top: var(--spacing-6);
@@ -45,7 +45,7 @@
 .faqList {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: var(--border-width-sm);
   background-color: var(--color-border-primary);
   border-radius: var(--border-radius-2xl);
   overflow: hidden;
@@ -125,7 +125,7 @@
   max-height: 0;
   
   &.expanded {
-    max-height: 500px;
+    max-height: calc(var(--spacing-6) * 4);
   }
 }
 

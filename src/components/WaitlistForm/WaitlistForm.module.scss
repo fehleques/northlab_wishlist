@@ -26,11 +26,11 @@
 .input {
   width: 100%;
   min-width: 0;
-  height: 2.75rem;
+  height: calc(var(--spacing-2-5) + var(--spacing-0-25));
   border-radius: var(--border-radius-2xl);
   background-color: rgba(var(--color-surface-primary-rgb), 0.8);
   backdrop-filter: blur(var(--blur-sm));
-  border: 1px solid var(--color-border-primary);
+  border: var(--border-width-sm) solid var(--color-border-primary);
   padding-left: var(--spacing-2);
   padding-right: var(--spacing-2);
   color: var(--color-text-primary);
@@ -42,7 +42,7 @@
   word-wrap: break-word;
   
   @media (min-width: $sm) {
-    height: 3rem;
+    height: calc(var(--spacing-2-5) + var(--spacing-0-5));
   }
   
   &::placeholder {
@@ -51,12 +51,12 @@
   
   &:focus {
     border-color: rgba(var(--color-indigo-400-rgb), 0.5);
-    box-shadow: 0 0 0 2px rgba(var(--color-indigo-400-rgb), 0.2);
+    box-shadow: 0 0 0 var(--border-width-md) rgba(var(--color-indigo-400-rgb), 0.2);
   }
 }
 
 .button {
-  height: 2.75rem;
+  height: calc(var(--spacing-2-5) + var(--spacing-0-25));
   padding-left: var(--spacing-2-5);
   padding-right: var(--spacing-2-5);
   border-radius: var(--border-radius-2xl);
@@ -74,7 +74,7 @@
   box-sizing: border-box;
   
   @media (min-width: $sm) {
-    height: 3rem;
+    height: calc(var(--spacing-2-5) + var(--spacing-0-5));
   }
   
   &:hover {

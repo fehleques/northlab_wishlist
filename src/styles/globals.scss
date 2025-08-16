@@ -15,6 +15,7 @@
   --color-neutral-900: #18181b;
   --color-neutral-950: #09090b;
   --color-white: #ffffff;
+  --color-white-rgb: 255, 255, 255;
   
   --color-indigo-400: #818cf8;
   --color-indigo-500: #6366f1;
@@ -105,6 +106,8 @@
   --border-radius-2xl: 1rem;
   --border-radius-3xl: 1.5rem;
   --border-radius-full: 9999px;
+  --border-width-sm: 1px;
+  --border-width-md: 2px;
   
   // Shadows
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);

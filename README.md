@@ -21,3 +21,7 @@ const { theme, toggleTheme } = useTheme();
 
 They automatically respond to system setting changes and persist user choices, so include them wherever components need to know about theme or motion preferences.
 
+## Styling guidelines
+
+All spacing, color, and typography values should come from the design tokens defined in [`src/styles/globals.scss`](src/styles/globals.scss). Use the CSS variables (e.g. `var(--spacing-2)`) or combine them with `calc()` instead of hard-coded literals. A Stylelint rule checks for non-token values—run `npm run lint` before committing to verify compliance.
+

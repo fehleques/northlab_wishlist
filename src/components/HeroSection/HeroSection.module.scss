@@ -25,7 +25,7 @@
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
   will-change: transform;
   opacity: 0;
-  transform: translateY(3rem);
+  transform: translateY(var(--spacing-3));
   overflow-wrap: break-word;
   word-wrap: break-word;
   
@@ -97,7 +97,7 @@
 .roadmapContainer {
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
   opacity: 0;
-  transform: translateY(2rem);
+  transform: translateY(var(--spacing-2));
   width: 100%;
   max-width: 100%;
   overflow: hidden;
