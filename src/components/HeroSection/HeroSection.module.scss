@@ -53,6 +53,12 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   max-width: 100%;
+  @include gradient-primary;
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientMove 8s ease-in-out infinite;
   
   @media (min-width: $sm) {
     font-size: var(--font-size-7xl);
