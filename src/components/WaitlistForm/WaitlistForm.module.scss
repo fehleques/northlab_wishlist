@@ -60,8 +60,9 @@
   padding-left: var(--spacing-2-5);
   padding-right: var(--spacing-2-5);
   border-radius: var(--border-radius-2xl);
-  background-color: var(--color-text-primary);
-  color: var(--color-background);
+  @include gradient-primary;
+  background-size: 200% 200%;
+  color: var(--color-white);
   font-weight: 700;
   box-shadow: var(--shadow-lg);
   transition: all 0.2s ease-out;
@@ -72,16 +73,16 @@
   flex-shrink: 0;
   min-width: fit-content;
   box-sizing: border-box;
+  animation: gradientMove 6s ease-in-out infinite;
   
   @media (min-width: $sm) {
     height: calc(var(--spacing-2-5) + var(--spacing-0-5));
   }
   
   &:hover {
-    background-color: var(--color-text-primary);
     box-shadow: var(--shadow-xl);
     transform: scale(1.02);
-    opacity: 0.9;
+    filter: brightness(1.1);
   }
   
   &:active {

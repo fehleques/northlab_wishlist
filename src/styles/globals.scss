@@ -16,6 +16,9 @@
   --color-neutral-950: #09090b;
   --color-white: #ffffff;
   --color-white-rgb: 255, 255, 255;
+
+  // Font stacks
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
   
   --color-indigo-400: #818cf8;
   --color-indigo-500: #6366f1;
@@ -150,19 +153,31 @@ html {
 }
 
 @keyframes slideUp {
-  0% { 
-    opacity: 0; 
-    transform: translateY(20px); 
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0); 
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
 // Global styles
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-background);
@@ -171,6 +186,11 @@ body {
   line-height: var(--line-height-normal);
   font-size: var(--font-size-base);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:focus-visible {
+  outline: var(--border-width-md) solid rgba(var(--color-indigo-400-rgb), 0.6);
+  outline-offset: 2px;
 }
 
 // Global navigation link styling
