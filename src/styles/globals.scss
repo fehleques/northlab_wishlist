@@ -79,13 +79,14 @@
   --spacing-6: clamp(5rem, 4rem + 5vw, 8rem);              // 80px-128px
   --spacing-8: clamp(6rem, 5rem + 5vw, 10rem);             // 96px-160px
   
-  // Typography scale (modular 1.25 ratio, 12px base)
-  --font-size-1: 0.75rem;    // 12px
-  --font-size-2: 0.9375rem;  // 15px
-  --font-size-3: 1.1719rem;  // 18.75px
-  --font-size-4: 1.4648rem;  // 23.44px
-  --font-size-5: 1.8311rem;  // 29.30px
-  --font-size-6: 2.2889rem;  // 36.62px
+  // Typography scale (16px base)
+  --font-size-base: 1rem;    // 16px
+  --font-size-1: var(--font-size-base); // 16px
+  --font-size-2: 1.25rem;    // 20px
+  --font-size-3: 1.5rem;     // 24px
+  --font-size-4: 2rem;       // 32px
+  --font-size-5: 2.5rem;     // 40px
+  --font-size-6: 3rem;       // 48px
   
   // Line heights
   --line-height-none: 1;
@@ -186,7 +187,7 @@ body {
   color: var(--color-text-primary);
   overflow-x: hidden;
   line-height: var(--line-height-normal);
-  font-size: var(--font-size-3);
+  font-size: var(--font-size-base);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
