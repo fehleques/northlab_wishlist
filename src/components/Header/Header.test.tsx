@@ -16,7 +16,7 @@ expect.extend({ toHaveNoViolations });
 describe('Header', () => {
   it('renders an accessible logo', async () => {
     const { container, getByRole } = render(
-      <Header isLoaded={true} theme="light" onToggleTheme={() => {}} />
+      <Header isLoaded={true} />
     );
 
     getByRole('img', { name: 'NorthLab' });

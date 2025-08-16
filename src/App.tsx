@@ -11,7 +11,6 @@ import { Footer } from "./components/Footer/Footer";
 import { ThreeDBackground } from "./components/ThreeDBackground/ThreeDBackground";
 import "./styles/globals.scss";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
-import useTheme from "./hooks/useTheme";
 
 // Register GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -22,7 +21,6 @@ export default function NorthLabComingSoon() {
   const [globalRotateY, setGlobalRotateY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const prefersReducedMotion = usePrefersReducedMotion();
-  const { theme, toggleTheme } = useTheme();
 
   // Refs for animations
   const heroRef = useRef<HTMLDivElement>(null);
@@ -317,7 +315,7 @@ export default function NorthLabComingSoon() {
         prefersReducedMotion={prefersReducedMotion}
       />
       
-      <Header isLoaded={isLoaded} theme={theme} onToggleTheme={toggleTheme} />
+      <Header isLoaded={isLoaded} />
       
       <HeroSection 
         isLoaded={isLoaded}
