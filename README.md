@@ -1,24 +1,21 @@
-# northlab_wishlist
+# Northlab Wishlist
 
-[Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/fehleques/northlab_wishlist)
+A minimal Next.js application for collecting interest in upcoming Northlab products. It uses TypeScript, SCSS, and Shadcn-based components styled through shared design tokens.
 
-## Hooks
+## Getting Started
 
-The project exposes reusable React hooks for common browser preferences:
+Install dependencies and start the dev server:
 
-- `usePrefersReducedMotion` reflects the user's reduced-motion setting so components can adapt animations.
-
-Use this hook instead of accessing `matchMedia` directly to keep behavior consistent across the app.
-
-```tsx
-import usePrefersReducedMotion from './hooks/usePrefersReducedMotion';
-
-const prefersReducedMotion = usePrefersReducedMotion();
+```bash
+npm install
+npm run dev
 ```
 
-It automatically responds to system setting changes, so include it wherever components need to know about motion preferences.
+Then open <http://localhost:3000> in your browser.
 
-## Styling guidelines
+## Contributing
 
-All spacing, color, and typography values should come from the design tokens defined in [`src/styles/globals.scss`](src/styles/globals.scss). Use the CSS variables (e.g. `var(--spacing-2)`) or combine them with `calc()` instead of hard-coded literals. A Stylelint rule checks for non-token values—run `npm run lint` before committing to verify compliance.
-
+1. Fork the repository and create a feature branch.
+2. Make your changes following the design system guidelines in `docs/design-system.md`.
+3. Run `npm run lint` and ensure it passes.
+4. Submit a pull request.

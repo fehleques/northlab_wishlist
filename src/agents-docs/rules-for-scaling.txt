@@ -1,9 +1,0 @@
-Rules for Scaling
-
-New pages: Only compose primitives/components
-
-New visuals: Create new primitives, don’t hack in one-off CSS
-
-Token changes: Go through tokens file only
-
-Testing: Add visual regression tests for type scale and spacing

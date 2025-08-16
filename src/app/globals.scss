@@ -1,0 +1,14 @@
+@import 'normalize.css';
+@import '../styles/tokens.css';
+
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-base);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
