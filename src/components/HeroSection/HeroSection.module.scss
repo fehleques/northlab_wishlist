@@ -25,7 +25,7 @@
 }
 
 .headline {
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-6);
   font-weight: 700;
   letter-spacing: var(--letter-spacing-tighter);
   line-height: var(--line-height-tight);
@@ -51,7 +51,7 @@
 
 .description {
   margin-top: var(--spacing-1);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-5);
   line-height: var(--line-height-relaxed);
   color: var(--color-text-secondary);
   max-width: var(--max-w-2xl);

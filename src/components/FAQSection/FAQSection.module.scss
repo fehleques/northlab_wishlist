@@ -12,7 +12,7 @@
 }
 
 .faqTitle {
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-6);
   font-weight: 700;
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text-primary);
@@ -24,12 +24,12 @@
   max-width: 100%;
   
   @media (min-width: $sm) {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-6);
   }
 }
 
 .faqDescription {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-4);
   color: var(--color-text-tertiary);
   max-width: var(--max-w-2xl);
   margin: 0 auto;
@@ -38,7 +38,7 @@
   word-wrap: break-word;
   
   @media (min-width: $sm) {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-5);
   }
 }
 
@@ -92,7 +92,7 @@
 }
 
 .faqQuestion {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-3);
   font-weight: 500;
   color: var(--color-text-primary);
   line-height: var(--line-height-relaxed);
@@ -104,7 +104,7 @@
   min-width: 0;
   
   @media (min-width: $sm) {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-4);
   }
 }
 
@@ -132,7 +132,7 @@
 .faqAnswerContent {
   padding: 0 var(--spacing-2) var(--spacing-2) var(--spacing-2);
   color: var(--color-text-secondary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-3);
   line-height: var(--line-height-relaxed);
   overflow-wrap: break-word;
   word-wrap: break-word;
