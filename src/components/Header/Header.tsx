@@ -14,7 +14,7 @@ export const Header: React.FC<HeaderProps> = ({ isLoaded, theme, onToggleTheme }
   return (
     <header className={`${styles.header} ${isLoaded ? styles.loaded : ''}`} role="banner">
       <Container className={styles.headerContent}>
-        <NorthLabLockup className={styles.logo} />
+        <NorthLabLockup className={styles.logo} ariaLabel="NorthLab" />
         <nav className={styles.nav} aria-label="Main navigation">
           <a href="#about" className="app-nav-link">About</a>
           <a href="#roadmap" className="app-nav-link">Roadmap</a>
