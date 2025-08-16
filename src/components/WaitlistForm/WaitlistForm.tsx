@@ -3,11 +3,19 @@ import { addEmailToWaitlist, supabase } from '../../services/waitlistService';
 import styles from './WaitlistForm.module.scss';
 
 /**
+ * Validate email format
+ */
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+/**
  * Waitlist signup form.
  *
- * Validates the email locally, surfaces server responses and gracefully
- * handles network errors by resetting the loading state and refocusing the
- * input for correction.
+ * Validates the email locally (including format) before contacting the server,
+ * surfaces server responses and gracefully handles network errors by resetting
+ * the loading state and refocusing the input for correction.
  */
 export const WaitlistForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -28,9 +36,18 @@ export const WaitlistForm: React.FC = () => {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!email.trim()) {
+    const normalizedEmail = email.trim();
+
+    if (!normalizedEmail) {
       setStatus("error");
       setMsg("Please enter your email address.");
+      inputRef.current?.focus();
+      return;
+    }
+
+    if (!isValidEmail(normalizedEmail)) {
+      setStatus("error");
+      setMsg("Please enter a valid email address.");
       inputRef.current?.focus();
       return;
     }
@@ -47,7 +64,7 @@ export const WaitlistForm: React.FC = () => {
     setStatus("loading");
 
     try {
-      const result = await addEmailToWaitlist(email, 'website');
+      const result = await addEmailToWaitlist(normalizedEmail, 'website');
       
       if (result.success) {
         setStatus("success");
@@ -93,7 +110,11 @@ export const WaitlistForm: React.FC = () => {
       </form>
       
       {msg && (
-        <div className={`${styles.message} ${status === "error" ? styles.error : styles.success}`}>
+        <div
+          role="status"
+          aria-live="polite"
+          className={`${styles.message} ${status === "error" ? styles.error : styles.success}`}
+        >
           {msg}
         </div>
       )}
