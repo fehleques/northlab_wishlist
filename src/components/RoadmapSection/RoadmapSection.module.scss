@@ -1,0 +1,13 @@
+.roadmap {
+  border-top: var(--border-width-sm) solid var(--color-border-primary);
+  padding-top: var(--spacing-6);
+  padding-bottom: var(--spacing-8);
+  display: flex;
+  justify-content: center;
+}
+
+.cardWrapper {
+  width: 100%;
+  max-width: var(--max-w-3xl);
+  margin: 0 auto;
+}

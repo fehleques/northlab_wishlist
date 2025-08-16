@@ -12,7 +12,7 @@
 }
 
 .faqTitle {
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-2xl);
   font-weight: 700;
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text-primary);
@@ -24,7 +24,7 @@
   max-width: 100%;
   
   @media (min-width: $sm) {
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-2xl);
   }
 }
 

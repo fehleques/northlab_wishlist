@@ -8,7 +8,7 @@
 }
 
 .communityTitle {
-  font-size: var(--font-size-5xl);
+  font-size: var(--font-size-3xl);
   font-weight: 700;
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text-primary);
@@ -23,7 +23,7 @@
   hyphens: auto;
   
   @media (min-width: $sm) {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-3xl);
   }
 }
 
