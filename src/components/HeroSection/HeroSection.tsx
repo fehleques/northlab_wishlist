@@ -50,7 +50,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 globalRotateY * -0.2
               }deg) translateZ(10px)`,
             }}
-            aria-label="NorthLab is a place where your craft, your ideas, and your ambition get the clarity they deserve. Built for people who choose their own path, not the one handed to them."
           >
             <span className="line">
               NorthLab is a place where your craft, your ideas, and your
