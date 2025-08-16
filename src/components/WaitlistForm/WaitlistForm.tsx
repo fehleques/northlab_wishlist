@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { addEmailToWaitlist, supabase } from '../../services/waitlistService';
 import styles from './WaitlistForm.module.scss';
 
+/**
+ * Waitlist signup form.
+ *
+ * Validates the email locally, surfaces server responses and gracefully
+ * handles network errors by resetting the loading state and refocusing the
+ * input for correction.
+ */
 export const WaitlistForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [msg, setMsg] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -13,12 +21,14 @@ export const WaitlistForm: React.FC = () => {
     if (!email.trim()) {
       setStatus("error");
       setMsg("Please enter your email address.");
+      inputRef.current?.focus();
       return;
     }
 
     if (!supabase) {
       setStatus("error");
       setMsg("Waitlist signups are currently unavailable. Please try again later.");
+      inputRef.current?.focus();
       return;
     }
 
@@ -36,11 +46,13 @@ export const WaitlistForm: React.FC = () => {
       } else {
         setStatus("error");
         setMsg(result.message);
+        inputRef.current?.focus();
       }
     } catch (error) {
       console.error('Form submission error:', error);
       setStatus("error");
       setMsg("Something went wrong. Please try again.");
+      inputRef.current?.focus();
     }
   }
 
@@ -50,6 +62,7 @@ export const WaitlistForm: React.FC = () => {
         <div className={styles.inputWrapper}>
           <label htmlFor="email" className="sr-only">Email address</label>
           <input
+            ref={inputRef}
             id="email"
             type="email"
             value={email}
