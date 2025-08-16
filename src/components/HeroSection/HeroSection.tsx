@@ -1,18 +1,18 @@
-import React from 'react';
-import { Container } from '../Container/Container';
-import { FeatureItem } from '../FeatureItem/FeatureItem';
-import { WaitlistForm } from '../WaitlistForm/WaitlistForm';
-import { heroContent } from '../../data/content';
-import styles from './HeroSection.module.scss';
+import React from "react"
+import { Container } from "../Container/Container"
+import { FeatureItem } from "../FeatureItem/FeatureItem"
+import { WaitlistForm } from "../WaitlistForm/WaitlistForm"
+import { heroContent } from "../../data/content"
+import styles from "./HeroSection.module.scss"
 
 interface HeroSectionProps {
-  isLoaded: boolean;
-  globalRotateX: number;
-  globalRotateY: number;
-  heroRef: React.RefObject<HTMLDivElement>;
-  headlineRef: React.RefObject<HTMLHeadingElement>;
-  descriptionRef: React.RefObject<HTMLParagraphElement>;
-  featuresRef: React.RefObject<HTMLDivElement>;
+  isLoaded: boolean
+  globalRotateX: number
+  globalRotateY: number
+  heroRef: React.RefObject<HTMLDivElement>
+  headlineRef: React.RefObject<HTMLHeadingElement>
+  descriptionRef: React.RefObject<HTMLParagraphElement>
+  featuresRef: React.RefObject<HTMLDivElement>
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -22,51 +22,64 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   heroRef,
   headlineRef,
   descriptionRef,
-  featuresRef
+  featuresRef,
 }) => {
   return (
     <section ref={heroRef} className={styles.hero}>
       <Container>
-        <div className={`${styles.heroContent} ${isLoaded ? styles.loaded : ''}`}>
-            <h1
-              ref={headlineRef}
-              className={styles.headline}
-              style={{
-                transform: `rotateX(${globalRotateX * -0.3}deg) rotateY(${globalRotateY * -0.3}deg) translateZ(20px)`,
-              }}
-            >
-              The future of independent creators has a new North. Yours.
-            </h1>
-            
-            <p 
-              ref={descriptionRef}
-              className={styles.description}
-              style={{
-                transform: `rotateX(${globalRotateX * -0.2}deg) rotateY(${globalRotateY * -0.2}deg) translateZ(10px)`,
-              }}
-            >
-              <span className="line">NorthLab is a place where your craft, your ideas, and your ambition</span>{' '}
-              <span className="line">get the clarity they deserve. Built for people who choose their own path,</span>{' '}
-              <span className="line">not the one handed to them.</span>
-            </p>
-            
-            <div 
-              ref={featuresRef}
-              className={styles.features}
-              style={{
-                transform: `rotateX(${globalRotateX * -0.1}deg) rotateY(${globalRotateY * -0.1}deg) translateZ(5px)`,
-              }}
-            >
-              {heroContent.features.map((feature, index) => (
-                <FeatureItem key={index}>
-                  {feature}
-                </FeatureItem>
-              ))}
-            </div>
+        <div
+          className={`${styles.heroContent} ${isLoaded ? styles.loaded : ""}`}
+        >
+          <h1
+            ref={headlineRef}
+            className={styles.headline}
+            style={{
+              transform: `rotateX(${globalRotateX * -0.3}deg) rotateY(${
+                globalRotateY * -0.3
+              }deg) translateZ(20px)`,
+            }}
+          >
+            The future of independent creators has a new North. Yours.
+          </h1>
 
-            <WaitlistForm />
+          <p
+            ref={descriptionRef}
+            className={styles.description}
+            style={{
+              transform: `rotateX(${globalRotateX * -0.2}deg) rotateY(${
+                globalRotateY * -0.2
+              }deg) translateZ(10px)`,
+            }}
+            aria-label="NorthLab is a place where your craft, your ideas, and your ambition get the clarity they deserve. Built for people who choose their own path, not the one handed to them."
+          >
+            <span className="line">
+              NorthLab is a place where your craft, your ideas, and your
+              ambition
+            </span>{" "}
+            <span className="line">
+              get the clarity they deserve. Built for people who choose their
+              own path,
+            </span>{" "}
+            <span className="line">not the one handed to them.</span>
+          </p>
+
+          <div
+            ref={featuresRef}
+            className={styles.features}
+            style={{
+              transform: `rotateX(${globalRotateX * -0.1}deg) rotateY(${
+                globalRotateY * -0.1
+              }deg) translateZ(5px)`,
+            }}
+          >
+            {heroContent.features.map((feature, index) => (
+              <FeatureItem key={index}>{feature}</FeatureItem>
+            ))}
+          </div>
+
+          <WaitlistForm />
         </div>
       </Container>
     </section>
-  );
-};
+  )
+}

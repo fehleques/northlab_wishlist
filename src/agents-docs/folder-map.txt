@@ -1,0 +1,20 @@
+src/
+  app/
+    (marketing)/page.tsx
+    (product)/docs/
+  components/
+    primitives/
+      Button.tsx
+      Card.tsx
+      Container.tsx
+      Input.tsx
+    layout/
+      Navbar.tsx
+      Footer.tsx
+    Hero.tsx
+    FeatureCard.tsx
+  styles/
+    tokens.css
+    base.css
+  lib/
+  content/
