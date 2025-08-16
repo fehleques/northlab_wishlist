@@ -1,6 +1,6 @@
 import React from 'react';
-import { NorthLabLockup } from '../NorthLabLockup';
-import { Container } from '../Container/Container';
+import { NorthLabLockup } from '../../NorthLabLockup';
+import { Container } from '../../primitives/Container';
 import styles from './Header.module.scss';
 
 interface HeaderProps {

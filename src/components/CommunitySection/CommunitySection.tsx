@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '../Container/Container';
+import { Container } from '../primitives/Container';
 import styles from './CommunitySection.module.scss';
 
 interface CommunitySectionProps {

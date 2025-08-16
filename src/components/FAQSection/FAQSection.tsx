@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { Container } from '../Container/Container';
+import { Container } from '../primitives/Container';
 import { faqContent } from '../../data/content';
 import styles from './FAQSection.module.scss';
 

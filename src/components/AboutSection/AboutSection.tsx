@@ -1,6 +1,6 @@
 import React from 'react';
 import { Users, Shield, Zap, ArrowUpRight } from 'lucide-react';
-import { Container } from '../Container/Container';
+import { Container } from '../primitives/Container';
 import { aboutContent } from '../../data/content';
 import styles from './AboutSection.module.scss';
 
