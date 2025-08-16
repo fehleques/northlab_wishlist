@@ -6,20 +6,17 @@
 
 The project exposes reusable React hooks for common browser preferences:
 
-- `useTheme` handles color-scheme selection and persists the user's choice in `localStorage`.
 - `usePrefersReducedMotion` reflects the user's reduced-motion setting so components can adapt animations.
 
-Use these hooks instead of accessing `matchMedia` or `localStorage` directly to keep behavior consistent across the app.
+Use this hook instead of accessing `matchMedia` directly to keep behavior consistent across the app.
 
 ```tsx
 import usePrefersReducedMotion from './hooks/usePrefersReducedMotion';
-import useTheme from './hooks/useTheme';
 
 const prefersReducedMotion = usePrefersReducedMotion();
-const { theme, toggleTheme } = useTheme();
 ```
 
-They automatically respond to system setting changes and persist user choices, so include them wherever components need to know about theme or motion preferences.
+It automatically responds to system setting changes, so include it wherever components need to know about motion preferences.
 
 ## Styling guidelines
 
