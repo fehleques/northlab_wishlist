@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { addEmailToWaitlist, supabase } from '../../services/waitlistService';
-import styles from './WaitlistForm.module.scss';
+import React from 'react';
+import { Input } from '../Input/Input';
+import { Button } from '../Button/Button';
+import { useWaitlistForm } from '../../hooks/useWaitlistForm';
 
 /**
  * Waitlist signup form.
@@ -10,95 +11,64 @@ import styles from './WaitlistForm.module.scss';
  * input for correction.
  */
 export const WaitlistForm: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [msg, setMsg] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
-  const skipResetRef = useRef(false);
-
-  useEffect(() => {
-    if (skipResetRef.current) {
-      skipResetRef.current = false;
-      return;
-    }
-    setStatus("idle");
-    setMsg("");
-  }, [email]);
-
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    if (!email.trim()) {
-      setStatus("error");
-      setMsg("Please enter your email address.");
-      inputRef.current?.focus();
-      return;
-    }
-
-    if (!supabase) {
-      setStatus("error");
-      setMsg("Waitlist signups are currently unavailable. Please try again later.");
-      inputRef.current?.focus();
-      return;
-    }
-
-    setMsg("");
-
-    setStatus("loading");
-
-    try {
-      const result = await addEmailToWaitlist(email, 'website');
-      
-      if (result.success) {
-        setStatus("success");
-        setMsg(result.message);
-        skipResetRef.current = true;
-        setEmail("");
-      } else {
-        setStatus("error");
-        setMsg(result.message);
-        inputRef.current?.focus();
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setStatus("error");
-      setMsg("Something went wrong. Please try again.");
-      inputRef.current?.focus();
-    }
-  }
+  const { email, setEmail, status, msg, inputRef, onSubmit } = useWaitlistForm();
 
   return (
-    <div className={styles.formContainer}>
-      <form onSubmit={onSubmit} className={styles.form}>
-        <div className={styles.inputWrapper}>
+    <div style={{ marginTop: 'var(--spacing-4)' }}>
+      <form
+        onSubmit={onSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--spacing-2)',
+          maxWidth: 'var(--max-w-lg)',
+          width: '100%',
+          minWidth: 0,
+          overflow: 'hidden'
+        }}
+      >
+        <div style={{ position: 'relative', flex: 1, minWidth: 0 }}>
           <label htmlFor="email" className="sr-only">Email address</label>
-          <input
+          <Input
             ref={inputRef}
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your@email.com"
-            className={styles.input}
             required
           />
         </div>
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          className={`${styles.button} ${status === "loading" ? styles.loading : ''}`}
-        >
-          {status === "loading" ? "Claiming your spot..." : "Claim your spot early"}
-        </button>
+        <Button type="submit" disabled={status === 'loading'} isLoading={status === 'loading'}>
+          {status === 'loading' ? 'Claiming your spot...' : 'Claim your spot early'}
+        </Button>
       </form>
-      
+
       {msg && (
-        <div className={`${styles.message} ${status === "error" ? styles.error : styles.success}`}>
+        <div
+          style={{
+            marginTop: 'var(--spacing-1-5)',
+            fontSize: 'var(--font-size-2)',
+            fontWeight: 500,
+            color:
+              status === 'error'
+                ? 'var(--color-red-400)'
+                : 'var(--color-emerald-400)',
+            transition: 'all 0.3s ease-out'
+          }}
+        >
           {msg}
         </div>
       )}
 
-      <p className={styles.disclaimer}>
+      <p
+        style={{
+          marginTop: 'var(--spacing-2)',
+          fontSize: 'var(--font-size-2)',
+          color: 'var(--color-text-tertiary)',
+          lineHeight: 'var(--line-height-relaxed)'
+        }}
+      >
         Help shape the future of independent creation.
       </p>
     </div>
