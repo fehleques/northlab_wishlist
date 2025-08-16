@@ -1,5 +1,3 @@
-@use '../../styles' as *;
-
 .footer {
   border-top: var(--border-width-sm) solid var(--color-border-primary);
   position: relative;
@@ -16,7 +14,7 @@
   overflow: hidden;
   width: 100%;
   
-  @media (min-width: $sm) {
+  @media (min-width: 640px) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

@@ -1,0 +1,134 @@
+/* Design tokens */
+:root {
+  /* Base color palette */
+  --color-neutral-50: #fafafa;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #525252;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
+  --color-white: #ffffff;
+  --color-white-rgb: 255, 255, 255;
+
+  /* Font stacks */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+
+  --color-indigo-400: #818cf8;
+  --color-indigo-500: #6366f1;
+  --color-sky-400: #38bdf8;
+  --color-sky-500: #0ea5e9;
+
+  --color-red-400: #f87171;
+  --color-emerald-400: #34d399;
+
+  /* RGB versions for opacity usage */
+  --color-neutral-900-rgb: 24, 24, 27;
+  --color-neutral-800-rgb: 39, 39, 42;
+  --color-neutral-950-rgb: 9, 9, 11;
+  --color-indigo-400-rgb: 129, 140, 248;
+  --color-indigo-500-rgb: 99, 102, 241;
+  --color-sky-400-rgb: 56, 189, 248;
+  --color-sky-500-rgb: 14, 165, 233;
+  --color-red-400-rgb: 248, 113, 113;
+  --color-emerald-400-rgb: 52, 211, 153;
+
+  /* Semantic color variables (Dark theme default) */
+  --color-background: #050510;
+  --color-surface-primary: #0b0b1a;
+  --color-surface-secondary: #141426;
+  --color-text-primary: var(--color-neutral-50);
+  --color-text-secondary: var(--color-neutral-400);
+  --color-text-tertiary: var(--color-neutral-500);
+  --color-border-primary: var(--color-neutral-800);
+  --color-border-secondary: var(--color-neutral-600);
+  --color-accent-primary: var(--color-indigo-400);
+  --color-accent-secondary: var(--color-sky-400);
+
+  /* RGB versions for semantic colors */
+  --color-background-rgb: 5, 5, 16;
+  --color-surface-primary-rgb: 11, 11, 26;
+  --color-surface-secondary-rgb: 20, 20, 38;
+
+  /* Subtle primary gradient */
+  --gradient-primary: linear-gradient(
+    135deg,
+    rgba(var(--color-indigo-500-rgb), 0.25),
+    rgba(var(--color-sky-500-rgb), 0.25)
+  );
+
+  /* Spacing scale (based on 0.25rem = 4px) */
+  --spacing-0-25: 0.25rem;
+  --spacing-0-375: 0.375rem;
+  --spacing-0-5: 0.5rem;
+  --spacing-0-75: 0.75rem;
+  --spacing-1: 1rem;
+  --spacing-1-5: 1.5rem;
+  --spacing-2: clamp(1.5rem, 1.25rem + 1.25vw, 2.5rem);
+  --spacing-2-5: clamp(2rem, 1.75rem + 1.25vw, 3rem);
+  --spacing-3: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+  --spacing-3-5: clamp(3rem, 2.5rem + 2.5vw, 4.5rem);
+  --spacing-4: clamp(3.5rem, 3rem + 2.5vw, 5rem);
+  --spacing-5: clamp(4rem, 3.5rem + 2.5vw, 6rem);
+  --spacing-6: clamp(5rem, 4rem + 5vw, 8rem);
+  --spacing-8: clamp(6rem, 5rem + 5vw, 10rem);
+
+  /* Typography scale (modular 1.25 ratio, 12px base) */
+  --font-size-1: 0.75rem;
+  --font-size-2: 0.9375rem;
+  --font-size-3: 1.1719rem;
+  --font-size-4: 1.4648rem;
+  --font-size-5: 1.8311rem;
+  --font-size-6: 2.2889rem;
+
+  /* Line heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.25;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
+
+  /* Letter spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+
+  /* Border radius */
+  --border-radius-sm: 0.125rem;
+  --border-radius-md: 0.375rem;
+  --border-radius-lg: 0.5rem;
+  --border-radius-xl: 0.75rem;
+  --border-radius-2xl: 1rem;
+  --border-radius-3xl: 1.5rem;
+  --border-radius-full: 9999px;
+  --border-width-sm: 1px;
+  --border-width-md: 2px;
+
+  /* Shadows */
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* Blur values */
+  --blur-sm: 4px;
+  --blur-md: 12px;
+  --blur-xl: 24px;
+  --blur-2xl: 40px;
+
+  /* Max widths */
+  --max-w-lg: 32rem;
+  --max-w-2xl: 42rem;
+  --max-w-3xl: 48rem;
+  --max-w-4xl: 56rem;
+  --max-w-7xl: 80rem;
+
+  /* Z-index */
+  --z-0: 0;
+  --z-10: 10;
+}
