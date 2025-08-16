@@ -21,8 +21,8 @@ let supabase: unknown;
 describe('addEmailToWaitlist', () => {
   beforeEach(async () => {
     vi.resetModules();
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://example.com');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'anon');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://example.com');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'anon');
 
     const mod = await import('./waitlistService');
     addEmailToWaitlist = mod.addEmailToWaitlist;
@@ -80,8 +80,8 @@ describe('addEmailToWaitlist with missing credentials', () => {
     vi.resetModules();
     const createClientMock = createClient as unknown as Mock;
     createClientMock.mockClear();
-    vi.stubEnv('VITE_SUPABASE_URL', '');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', '');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', '');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', '');
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -106,8 +106,8 @@ describe('getWaitlistStats', () => {
 
   beforeEach(async () => {
     vi.resetModules();
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://example.com');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'anon');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://example.com');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'anon');
 
     const mod = await import('./waitlistService');
     getWaitlistStats = mod.getWaitlistStats;
@@ -128,8 +128,8 @@ describe('getWaitlistStats', () => {
 
   it('returns error when credentials are missing', async () => {
     vi.resetModules();
-    vi.stubEnv('VITE_SUPABASE_URL', '');
-    vi.stubEnv('VITE_SUPABASE_ANON_KEY', '');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', '');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', '');
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
