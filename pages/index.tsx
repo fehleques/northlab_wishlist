@@ -2,16 +2,15 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
-import { Header } from "./components/Header/Header";
-import { HeroSection } from "./components/HeroSection/HeroSection";
-import { RoadmapSection } from "./components/RoadmapSection/RoadmapSection";
-import { AboutSection } from "./components/AboutSection/AboutSection";
-import { CommunitySection } from "./components/CommunitySection/CommunitySection";
-import { FAQSection } from "./components/FAQSection/FAQSection";
-import { Footer } from "./components/Footer/Footer";
-import { ThreeDBackground } from "./components/ThreeDBackground/ThreeDBackground";
-import "./styles/base.css";
-import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
+import { Header } from "../src/components/Header/Header";
+import { HeroSection } from "../src/components/HeroSection/HeroSection";
+import { RoadmapSection } from "../src/components/RoadmapSection/RoadmapSection";
+import { AboutSection } from "../src/components/AboutSection/AboutSection";
+import { CommunitySection } from "../src/components/CommunitySection/CommunitySection";
+import { FAQSection } from "../src/components/FAQSection/FAQSection";
+import { Footer } from "../src/components/Footer/Footer";
+import { ThreeDBackground } from "../src/components/ThreeDBackground/ThreeDBackground";
+import usePrefersReducedMotion from "../src/hooks/usePrefersReducedMotion";
 
 // Register GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
