@@ -1,5 +1,3 @@
-@use '../../styles' as *;
-
 .hero {
   padding-top: var(--spacing-4);
   padding-bottom: var(--spacing-5);
@@ -39,7 +37,7 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   max-width: 100%;
-  @include gradient-primary;
+  background: var(--gradient-primary);
   background-size: 200% 200%;
   background-clip: text;
   -webkit-background-clip: text;

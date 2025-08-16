@@ -10,7 +10,7 @@ import { CommunitySection } from "./components/CommunitySection/CommunitySection
 import { FAQSection } from "./components/FAQSection/FAQSection";
 import { Footer } from "./components/Footer/Footer";
 import { ThreeDBackground } from "./components/ThreeDBackground/ThreeDBackground";
-import "./styles/globals.scss";
+import "./styles/base.css";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
 
 // Register GSAP ScrollTrigger plugin
