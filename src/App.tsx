@@ -36,45 +36,6 @@ export default function NorthLabComingSoon() {
   const aboutRef = useRef<HTMLElement>(null);
   const communityRef = useRef<HTMLElement>(null);
   const faqRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: prefersReducedMotion ? 0.8 : 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: prefersReducedMotion ? 1.5 : 1,
-      touchMultiplier: 2,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    // Connect Lenis with GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-
-    setTimeout(() => {
-      setIsLoaded(true);
-      if (!prefersReducedMotion) {
-        initScrollAnimations();
-      }
-    }, 300);
-
-    return () => {
-      lenis.destroy();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, [prefersReducedMotion, initScrollAnimations]);
-
   const initScrollAnimations = useCallback(() => {
     if (prefersReducedMotion) {
       // For users who prefer reduced motion, just fade in elements without complex animations
@@ -277,6 +238,45 @@ export default function NorthLabComingSoon() {
       );
     }
   }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: prefersReducedMotion ? 0.8 : 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: prefersReducedMotion ? 1.5 : 1,
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Connect Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    setTimeout(() => {
+      setIsLoaded(true);
+      if (!prefersReducedMotion) {
+        initScrollAnimations();
+      }
+    }, 300);
+
+    return () => {
+      lenis.destroy();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, [prefersReducedMotion, initScrollAnimations]);
+
 
   const handleGlobalMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
