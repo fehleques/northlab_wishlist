@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
 import { Header } from "./components/Header/Header";
 import { HeroSection } from "./components/HeroSection/HeroSection";
+import { RoadmapSection } from "./components/RoadmapSection/RoadmapSection";
 import { AboutSection } from "./components/AboutSection/AboutSection";
 import { CommunitySection } from "./components/CommunitySection/CommunitySection";
 import { FAQSection } from "./components/FAQSection/FAQSection";
@@ -317,7 +318,7 @@ export default function NorthLabComingSoon() {
       
       <Header isLoaded={isLoaded} />
       
-      <HeroSection 
+      <HeroSection
         isLoaded={isLoaded}
         globalRotateX={globalRotateX}
         globalRotateY={globalRotateY}
@@ -325,6 +326,9 @@ export default function NorthLabComingSoon() {
         headlineRef={headlineRef}
         descriptionRef={descriptionRef}
         featuresRef={featuresRef}
+      />
+
+      <RoadmapSection
         roadmapRef={roadmapRef}
         phaseNowRef={phaseNowRef}
         phaseNextRef={phaseNextRef}

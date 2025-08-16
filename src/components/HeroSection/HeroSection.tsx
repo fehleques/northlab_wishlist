@@ -2,7 +2,6 @@ import React from 'react';
 import { Container } from '../Container/Container';
 import { FeatureItem } from '../FeatureItem/FeatureItem';
 import { WaitlistForm } from '../WaitlistForm/WaitlistForm';
-import { RoadmapCard } from '../RoadmapCard/RoadmapCard';
 import { heroContent } from '../../data/content';
 import styles from './HeroSection.module.scss';
 
@@ -14,10 +13,6 @@ interface HeroSectionProps {
   headlineRef: React.RefObject<HTMLHeadingElement>;
   descriptionRef: React.RefObject<HTMLParagraphElement>;
   featuresRef: React.RefObject<HTMLDivElement>;
-  roadmapRef: React.RefObject<HTMLDivElement>;
-  phaseNowRef: React.RefObject<HTMLDivElement>;
-  phaseNextRef: React.RefObject<HTMLDivElement>;
-  phaseLaterRef: React.RefObject<HTMLDivElement>;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -27,18 +22,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   heroRef,
   headlineRef,
   descriptionRef,
-  featuresRef,
-  roadmapRef,
-  phaseNowRef,
-  phaseNextRef,
-  phaseLaterRef
+  featuresRef
 }) => {
   return (
     <section ref={heroRef} className={styles.hero}>
       <Container>
-        <div className={styles.heroGrid}>
-          <div className={`${styles.heroContent} ${isLoaded ? styles.loaded : ''}`}>
-            <h1 
+        <div className={`${styles.heroContent} ${isLoaded ? styles.loaded : ''}`}>
+            <h1
               ref={headlineRef}
               className={styles.headline}
               style={{
@@ -75,17 +65,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             <WaitlistForm />
-          </div>
-
-          <div className={`${styles.roadmapContainer} ${isLoaded ? styles.loaded : ''}`}>
-            <div ref={roadmapRef}>
-              <RoadmapCard 
-                phaseNowRef={phaseNowRef}
-                phaseNextRef={phaseNextRef}
-                phaseLaterRef={phaseLaterRef}
-              />
-            </div>
-          </div>
         </div>
       </Container>
     </section>
