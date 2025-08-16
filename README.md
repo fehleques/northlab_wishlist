@@ -2,6 +2,10 @@
 
 [Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/fehleques/northlab_wishlist)
 
+## Framework
+
+This project now uses [Next.js](https://nextjs.org) with the App Router.
+
 ## Hooks
 
 The project exposes reusable React hooks for common browser preferences:
@@ -20,5 +24,5 @@ It automatically responds to system setting changes, so include it wherever comp
 
 ## Styling guidelines
 
-All spacing, color, and typography values should come from the design tokens defined in [`src/styles/globals.scss`](src/styles/globals.scss). Use the CSS variables (e.g. `var(--spacing-2)`) or combine them with `calc()` instead of hard-coded literals. A Stylelint rule checks for non-token values—run `npm run lint` before committing to verify compliance.
+All spacing, color, and typography values should come from the design tokens defined in [`styles/globals.scss`](styles/globals.scss). Use the CSS variables (e.g. `var(--spacing-2)`) or combine them with `calc()` instead of hard-coded literals. A Stylelint rule checks for non-token values—run `npm run lint` before committing to verify compliance.
 
