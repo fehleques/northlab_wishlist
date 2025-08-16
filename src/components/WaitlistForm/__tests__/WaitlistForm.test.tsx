@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import React from 'react';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { WaitlistForm } from '../WaitlistForm';
 
@@ -75,5 +75,23 @@ describe('WaitlistForm', () => {
     await screen.findByText('Something went wrong. Please try again.');
     expect(button.hasAttribute('disabled')).toBe(false);
     expect(document.activeElement).toBe(input);
+  });
+
+  it('clears feedback when email changes', async () => {
+    addEmailToWaitlist.mockResolvedValueOnce({ success: false, message: 'Server error' });
+
+    render(<WaitlistForm />);
+
+    const input = screen.getByLabelText('Email address');
+    fireEvent.change(input, { target: { value: 'test@example.com' } });
+    fireEvent.click(screen.getByRole('button'));
+
+    await screen.findByText('Server error');
+
+    fireEvent.change(input, { target: { value: 'new@example.com' } });
+
+    await waitFor(() => {
+      expect(screen.queryByText('Server error')).toBeNull();
+    });
   });
 });
