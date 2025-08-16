@@ -98,3 +98,63 @@ describe('addEmailToWaitlist with missing credentials', () => {
     consoleSpy.mockRestore();
   });
 });
+
+describe('getWaitlistStats', () => {
+  const selectStats = vi.fn();
+  const fromStats = vi.fn(() => ({ select: selectStats }));
+  let getWaitlistStats: typeof import('./waitlistService')['getWaitlistStats'];
+
+  beforeEach(async () => {
+    vi.resetModules();
+    vi.stubEnv('VITE_SUPABASE_URL', 'https://example.com');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'anon');
+
+    const mod = await import('./waitlistService');
+    getWaitlistStats = mod.getWaitlistStats;
+    supabase = mod.supabase;
+    (supabase as unknown as { from: typeof fromStats }).from = fromStats;
+
+    vi.clearAllMocks();
+    selectStats.mockReset();
+  });
+
+  it('returns count on success', async () => {
+    selectStats.mockResolvedValueOnce({ count: 5, error: null });
+
+    const result = await getWaitlistStats();
+
+    expect(result).toEqual({ count: 5, error: null });
+  });
+
+  it('returns error when credentials are missing', async () => {
+    vi.resetModules();
+    vi.stubEnv('VITE_SUPABASE_URL', '');
+    vi.stubEnv('VITE_SUPABASE_ANON_KEY', '');
+
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const { getWaitlistStats, supabase } = await import('./waitlistService');
+
+    const result = await getWaitlistStats();
+
+    expect(supabase).toBeNull();
+    expect(result.count).toBe(0);
+    expect(result.error).toBe('Supabase client unavailable: missing credentials');
+    expect(consoleSpy).toHaveBeenCalledWith('Supabase client unavailable: missing credentials');
+
+    consoleSpy.mockRestore();
+  });
+
+  it('returns error message when Supabase fails', async () => {
+    selectStats.mockResolvedValueOnce({ count: null, error: { message: 'db error' } });
+
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const result = await getWaitlistStats();
+
+    expect(result).toEqual({ count: 0, error: 'db error' });
+    expect(consoleSpy).toHaveBeenCalledWith('Error getting waitlist stats:', { message: 'db error' });
+
+    consoleSpy.mockRestore();
+  });
+});

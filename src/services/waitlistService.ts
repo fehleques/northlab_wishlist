@@ -24,6 +24,11 @@ export interface WaitlistResponse {
   data?: WaitlistEntry;
 }
 
+export interface WaitlistStatsResponse {
+  count: number;
+  error: string | null;
+}
+
 /**
  * Add an email to the waitlist
  */
@@ -119,12 +124,15 @@ export async function addEmailToWaitlist(
 
 /**
  * Get waitlist statistics (optional - for admin use)
- */
-export async function getWaitlistStats() {
+*/
+export async function getWaitlistStats(): Promise<WaitlistStatsResponse> {
   try {
     if (!supabase) {
       console.error('Supabase client unavailable: missing credentials');
-      return { count: 0, error: 'Supabase client unavailable' };
+      return {
+        count: 0,
+        error: 'Supabase client unavailable: missing credentials'
+      };
     }
 
     const { count, error } = await supabase
@@ -133,13 +141,16 @@ export async function getWaitlistStats() {
 
     if (error) {
       console.error('Error getting waitlist stats:', error);
-      return { count: 0, error };
+      return { count: 0, error: error.message ?? 'Failed to get stats' };
     }
 
     return { count: count || 0, error: null };
   } catch (error) {
     console.error('Unexpected error getting stats:', error);
-    return { count: 0, error };
+    return {
+      count: 0,
+      error: error instanceof Error ? error.message : String(error)
+    };
   }
 }
 
