@@ -1,6 +1,5 @@
-// Import SCSS partials
-@import 'variables';
-@import 'mixins';
+// Import SCSS modules
+@use './index' as *;
 
 // Global styles and CSS custom properties
 :root {
