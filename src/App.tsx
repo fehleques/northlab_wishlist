@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
@@ -10,18 +10,19 @@ import { FAQSection } from "./components/FAQSection/FAQSection";
 import { Footer } from "./components/Footer/Footer";
 import { ThreeDBackground } from "./components/ThreeDBackground/ThreeDBackground";
 import "./styles/globals.scss";
+import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
+import useTheme from "./hooks/useTheme";
 
 // Register GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
-
-type Theme = 'light' | 'dark';
 
 export default function NorthLabComingSoon() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [globalRotateX, setGlobalRotateX] = useState(0);
   const [globalRotateY, setGlobalRotateY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [theme, setTheme] = useState<Theme>('dark');
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const { theme, toggleTheme } = useTheme();
 
   // Refs for animations
   const heroRef = useRef<HTMLDivElement>(null);
@@ -37,30 +38,6 @@ export default function NorthLabComingSoon() {
   const faqRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    // Initialize theme from localStorage or system preference
-    const savedTheme = localStorage.getItem('northlab-theme') as Theme;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-    
-    setTheme(initialTheme);
-    document.documentElement.setAttribute('data-theme', initialTheme);
-    
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem('northlab-theme')) {
-        const newTheme = e.matches ? 'dark' : 'light';
-        setTheme(newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-      }
-    };
-    
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
-    
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    // Initialize Lenis for smooth scrolling
     const lenis = new Lenis({
       duration: prefersReducedMotion ? 0.8 : 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -85,7 +62,6 @@ export default function NorthLabComingSoon() {
 
     gsap.ticker.lagSmoothing(0);
 
-    // Trigger entrance animations
     setTimeout(() => {
       setIsLoaded(true);
       if (!prefersReducedMotion) {
@@ -94,23 +70,12 @@ export default function NorthLabComingSoon() {
     }, 300);
 
     return () => {
-      mediaQuery.removeEventListener('change', handleSystemThemeChange);
       lenis.destroy();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [prefersReducedMotion, initScrollAnimations]);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('northlab-theme', newTheme);
-  };
-
-  const initScrollAnimations = () => {
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
+  const initScrollAnimations = useCallback(() => {
     if (prefersReducedMotion) {
       // For users who prefer reduced motion, just fade in elements without complex animations
       const allAnimatedElements = document.querySelectorAll('.word, .line, .feature-item, .phase-item, .animate-element');
@@ -311,7 +276,7 @@ export default function NorthLabComingSoon() {
         }
       );
     }
-  };
+  }, [prefersReducedMotion]);
 
   const handleGlobalMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -346,10 +311,10 @@ export default function NorthLabComingSoon() {
       onMouseMove={handleGlobalMouseMove}
       onMouseLeave={handleGlobalMouseLeave}
     >
-      <ThreeDBackground 
-        mouseX={mousePosition.x} 
-        mouseY={mousePosition.y} 
-        prefersReducedMotion={window.matchMedia('(prefers-reduced-motion: reduce)').matches}
+      <ThreeDBackground
+        mouseX={mousePosition.x}
+        mouseY={mousePosition.y}
+        prefersReducedMotion={prefersReducedMotion}
       />
       
       <Header isLoaded={isLoaded} theme={theme} onToggleTheme={toggleTheme} />
