@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Container } from '../Container/Container';
 import { faqContent } from '../../data/content';
 import styles from './FAQSection.module.scss';
@@ -20,9 +20,10 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onToggle })
         aria-expanded={isOpen}
       >
         <span className={styles.faqQuestion}>{question}</span>
-        <ChevronDown 
+        <ChevronDownIcon
           className={`${styles.faqIcon} ${isOpen ? styles.rotated : ''}`}
-          size={20}
+          width={20}
+          height={20}
         />
       </button>
       <div className={`${styles.faqAnswer} ${isOpen ? styles.expanded : ''}`}>
