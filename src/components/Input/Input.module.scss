@@ -1,0 +1,33 @@
+@use '../../styles' as *;
+
+.input {
+  width: 100%;
+  min-width: 0;
+  height: calc(var(--spacing-2-5) + var(--spacing-0-25));
+  border-radius: var(--border-radius-2xl);
+  background-color: rgba(var(--color-surface-primary-rgb), 0.8);
+  backdrop-filter: blur(var(--blur-sm));
+  border: var(--border-width-sm) solid var(--color-border-primary);
+  padding-left: var(--spacing-2);
+  padding-right: var(--spacing-2);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: all 0.2s ease-out;
+  font-size: var(--font-size-3);
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  @media (min-width: $sm) {
+    height: calc(var(--spacing-2-5) + var(--spacing-0-5));
+  }
+
+  &::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  &:focus {
+    border-color: rgba(var(--color-indigo-400-rgb), 0.5);
+    box-shadow: 0 0 0 var(--border-width-md) rgba(var(--color-indigo-400-rgb), 0.2);
+  }
+}
