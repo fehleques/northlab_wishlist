@@ -231,8 +231,8 @@ const Scene: React.FC<{
 
 /**
  * Animated TV static background. Renders a WebGL scene when possible and
- * falls back to a static CSS gradient when WebGL is unsupported or when the
- * `disable3D` prop is set.
+ * falls back to a static CSS gradient when WebGL is unsupported, when the
+ * `disable3D` prop is set, or when the user prefers reduced motion.
  */
 export const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
   mouseX,
@@ -246,7 +246,8 @@ export const ThreeDBackground: React.FC<ThreeDBackgroundProps> = ({
     setWebglSupported(isWebGLAvailable());
   }, []);
 
-  const shouldRenderCanvas = webglSupported && !disable3D;
+  const shouldRenderCanvas =
+    webglSupported && !disable3D && !prefersReducedMotion;
 
   return (
     <div className={styles.backgroundContainer}>
