@@ -1,14 +1,19 @@
 import React from 'react';
-import { Users, Shield, Zap, ArrowUpRight } from 'lucide-react';
+import {
+  UserGroupIcon,
+  ShieldCheckIcon,
+  BoltIcon,
+  ArrowUpRightIcon,
+} from '@heroicons/react/24/outline';
 import { Container } from '../Container/Container';
 import { aboutContent } from '../../data/content';
 import styles from './AboutSection.module.scss';
 
 // Icon mapping for dynamic icon rendering
 const iconMap = {
-  Users,
-  Shield,
-  Zap
+  Users: UserGroupIcon,
+  Shield: ShieldCheckIcon,
+  Zap: BoltIcon,
 };
 
 interface AboutSectionProps {
@@ -18,7 +23,7 @@ interface AboutSectionProps {
 export const AboutSection: React.FC<AboutSectionProps> = ({ aboutRef }) => {
   const getIcon = (iconName: string) => {
     const IconComponent = iconMap[iconName as keyof typeof iconMap];
-    return IconComponent ? <IconComponent size={24} /> : null;
+    return IconComponent ? <IconComponent width={24} height={24} /> : null;
   };
 
   return (
@@ -48,7 +53,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ aboutRef }) => {
               <h3 className={styles.benefitTitle}>{benefit.title}</h3>
               <p className={styles.benefitDescription}>{benefit.description}</p>
               <div className={styles.benefitArrow}>
-                <ArrowUpRight size={20} />
+                <ArrowUpRightIcon width={20} height={20} />
               </div>
             </div>
           ))}
