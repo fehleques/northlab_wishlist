@@ -61,6 +61,19 @@ describe('WaitlistForm', () => {
     expect(document.activeElement).toBe(input);
   });
 
+  it('validates email format client-side', async () => {
+    render(<WaitlistForm />);
+
+    const input = screen.getByLabelText('Email address');
+    const form = input.closest('form')!;
+    fireEvent.change(input, { target: { value: 'invalid-email' } });
+    fireEvent.submit(form);
+
+    await screen.findByText('Please enter a valid email address.');
+    expect(addEmailToWaitlist).not.toHaveBeenCalled();
+    expect(document.activeElement).toBe(input);
+  });
+
   it('focuses input and enables button on network error', async () => {
     addEmailToWaitlist.mockRejectedValueOnce(new Error('network'));
 
