@@ -1,3 +1,5 @@
+@use '../../styles' as *;
+
 .about {
   border-top: var(--border-width-sm) solid var(--color-border-primary);
   position: relative;
