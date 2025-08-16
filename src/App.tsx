@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
 import { Header } from "./components/Header/Header";
-import { HeroSection } from "./components/HeroSection/HeroSection";
+import { Hero } from "./components/Hero";
 import { RoadmapSection } from "./components/RoadmapSection/RoadmapSection";
 import { AboutSection } from "./components/AboutSection/AboutSection";
 import { CommunitySection } from "./components/CommunitySection/CommunitySection";
@@ -318,7 +318,7 @@ export default function NorthLabComingSoon() {
       
       <Header isLoaded={isLoaded} />
       
-      <HeroSection
+      <Hero
         isLoaded={isLoaded}
         globalRotateX={globalRotateX}
         globalRotateY={globalRotateY}
