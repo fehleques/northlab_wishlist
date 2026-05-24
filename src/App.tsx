@@ -77,6 +77,32 @@ async function addEmailToWaitlist(email: string): Promise<WaitlistResponse> {
   };
 }
 
+async function updateWaitlistContext(email: string, role: string, challenge: string): Promise<WaitlistResponse> {
+  const normalizedEmail = email.trim().toLowerCase();
+  
+  if (supabase) {
+    try {
+      const { error } = await supabase
+        .from('waitlist')
+        .update({ role, challenge })
+        .eq('email', normalizedEmail);
+        
+      if (error) throw error;
+      return { success: true, message: "Onboarding completed successfully!" };
+    } catch (e) {
+      console.error("Supabase update failed, falling back to localStorage", e);
+    }
+  }
+  
+  // Local fallback update
+  const fallbackKey = 'northlab_waitlist_context';
+  const contexts = JSON.parse(localStorage.getItem(fallbackKey) || '{}');
+  contexts[normalizedEmail] = { role, challenge };
+  localStorage.setItem(fallbackKey, JSON.stringify(contexts));
+  
+  return { success: true, message: "Onboarding completed! (Local persist enabled)" };
+}
+
 // ==========================================
 // NORTHLAB BRAND SVG WORDMARK LOGO
 // ==========================================
@@ -109,12 +135,323 @@ const NorthLabLockup = ({ className = "" }: { className?: string }) => {
   );
 };
 
+// ==========================================
+// ONBOARDING MODAL COMPONENT (Glassmorphic, Cinematic)
+// ==========================================
+interface OnboardingModalProps {
+  isOpen: boolean;
+  email: string;
+  onClose: () => void;
+}
+
+export function OnboardingModal({ isOpen, email, onClose }: OnboardingModalProps) {
+  const [step, setStep] = useState(1);
+  const [selectedRole, setSelectedRole] = useState("");
+  const [customRole, setCustomRole] = useState("");
+  const [selectedChallenge, setSelectedChallenge] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const roles = ["Designer", "Writer", "Developer", "Strategist", "Artist"];
+  const challenges = [
+    "Organizing scattered ideas & briefs",
+    "Getting high-signal peer feedback",
+    "Sourcing stronger opportunities",
+    "Tracking skill & master progression"
+  ];
+
+  // Secure validation and sanitization for "Other" input
+  const handleCustomRoleChange = (val: string) => {
+    // Limit to 50 characters
+    let cleaned = val.slice(0, 50);
+    // Sanitize to avoid injection (remove tags and keep safe characters)
+    cleaned = cleaned.replace(/<[^>]*>/g, ''); // strip HTML tags
+    cleaned = cleaned.replace(/[^\w\s\-\,\.\']/gi, ''); // allow alphanumeric, space, dash, comma, dot, quote
+    setCustomRole(cleaned);
+  };
+
+  const handleNext = () => {
+    if (step === 1) {
+      if (!selectedRole) {
+        setErrorMessage("Please select a role or specify your own.");
+        return;
+      }
+      if (selectedRole === "Other" && !customRole.trim()) {
+        setErrorMessage("Please write in your creative role.");
+        return;
+      }
+      setErrorMessage("");
+      setStep(2);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!selectedChallenge) {
+      setErrorMessage("Please select your primary challenge.");
+      return;
+    }
+    
+    setStatus("submitting");
+    setErrorMessage("");
+
+    const roleToSubmit = selectedRole === "Other" ? customRole.trim() : selectedRole;
+    
+    try {
+      const response = await updateWaitlistContext(email, roleToSubmit, selectedChallenge);
+      if (response.success) {
+        setStatus("success");
+        setTimeout(() => {
+          onClose();
+        }, 1500);
+      } else {
+        setStatus("error");
+        setErrorMessage(response.message);
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("Could not save your preferences. Please try again.");
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+        {/* Backdrop overlay */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-black/80 backdrop-blur-md"
+        />
+
+        {/* Modal container */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ type: "spring", duration: 0.5 }}
+          className="relative bg-[#101010]/90 border border-white/10 rounded-2xl shadow-[0_0_50px_-12px_rgba(222,219,200,0.15)] max-w-lg w-full p-8 overflow-hidden backdrop-blur-xl z-10 text-white"
+        >
+          {/* Subtle warm cream glow in top corner */}
+          <div className="absolute -top-40 -left-40 w-80 h-80 bg-[#DEDBC8] rounded-full blur-[120px] opacity-10 pointer-events-none" />
+
+          {/* Header & Steps progress */}
+          <div className="flex items-center justify-between mb-8 relative z-10">
+            <span className="text-brand-cream font-bold text-xs uppercase tracking-widest">
+              Setup Workspace
+            </span>
+            <div className="flex items-center gap-1.5">
+              <div className={`h-1.5 w-8 rounded-full transition-all duration-300 ${step >= 1 ? 'bg-brand-cream' : 'bg-white/10'}`} />
+              <div className={`h-1.5 w-8 rounded-full transition-all duration-300 ${step >= 2 ? 'bg-brand-cream' : 'bg-white/10'}`} />
+            </div>
+          </div>
+
+          {status === "success" ? (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-10 relative z-10"
+            >
+              <div className="w-12 h-12 rounded-full border border-brand-cream/35 flex items-center justify-center mx-auto mb-6 bg-brand-cream/10 text-brand-cream shadow-[0_0_15px_rgba(222,219,200,0.2)]">
+                <Check size={20} className="animate-pulse" />
+              </div>
+              <h3 className="text-xl font-normal text-white mb-2 tracking-tight">Your space is ready.</h3>
+              <p className="text-brand-stone text-xs leading-relaxed max-w-xs mx-auto">
+                Thank you for helping us design the future of independent work.
+              </p>
+            </motion.div>
+          ) : (
+            <div className="relative z-10">
+              <AnimatePresence mode="wait">
+                {step === 1 ? (
+                  <motion.div
+                    key="step1"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <h3 className="text-xl font-normal text-white mb-2 tracking-tight leading-tight">
+                      What is your primary creative role?
+                    </h3>
+                    <p className="text-brand-stone text-xs mb-6">
+                      Select one option to help us customize your creative guidance.
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      {roles.map((role) => (
+                        <button
+                          key={role}
+                          type="button"
+                          onClick={() => {
+                            setSelectedRole(role);
+                            setErrorMessage("");
+                          }}
+                          className={`py-3 px-4 rounded-lg border text-left text-xs font-semibold tracking-wide transition-all ${
+                            selectedRole === role
+                              ? 'border-brand-cream bg-brand-cream/10 text-brand-cream shadow-[0_0_15px_rgba(222,219,200,0.1)]'
+                              : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] text-brand-ash/80 hover:text-white'
+                          }`}
+                        >
+                          {role}
+                        </button>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedRole("Other");
+                          setErrorMessage("");
+                        }}
+                        className={`py-3 px-4 rounded-lg border text-left text-xs font-semibold tracking-wide transition-all ${
+                          selectedRole === "Other"
+                            ? 'border-brand-cream bg-brand-cream/10 text-brand-cream shadow-[0_0_15px_rgba(222,219,200,0.1)]'
+                            : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] text-brand-ash/80 hover:text-white'
+                        }`}
+                      >
+                        Other (Write-in)
+                      </button>
+                    </div>
+
+                    {/* Safe input field for write-in */}
+                    <AnimatePresence>
+                      {selectedRole === "Other" && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="overflow-hidden mb-6"
+                        >
+                          <div className="pt-2">
+                            <label className="block text-[10px] uppercase tracking-wider text-brand-stone mb-1.5 font-bold">
+                              Write in your creative role
+                            </label>
+                            <div className="relative">
+                              <input
+                                type="text"
+                                value={customRole}
+                                onChange={(e) => handleCustomRoleChange(e.target.value)}
+                                placeholder="e.g. Motion Designer, Architect, Curator"
+                                className="w-full bg-white/[0.02] text-white text-xs border border-white/10 rounded-lg py-2.5 px-3 focus:outline-none focus:border-brand-cream transition-all placeholder:text-brand-stone"
+                              />
+                              <span className={`absolute right-3 top-2.5 text-[9px] font-bold ${customRole.length >= 50 ? 'text-red-400' : 'text-brand-stone'}`}>
+                                {customRole.length}/50
+                              </span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {errorMessage && (
+                      <p className="text-red-400 text-xs mt-3 flex items-center gap-1.5 font-medium">
+                        <span>✕</span> {errorMessage}
+                      </p>
+                    )}
+
+                    <div className="mt-8 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={handleNext}
+                        className="bg-brand-cream hover:bg-brand-cream/95 text-black px-6 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer"
+                      >
+                        Continue
+                        <ArrowRight size={12} />
+                      </button>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="step2"
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <h3 className="text-xl font-normal text-white mb-2 tracking-tight leading-tight">
+                      What is the hardest part of your independent journey?
+                    </h3>
+                    <p className="text-brand-stone text-xs mb-6">
+                      We'll tailor early modules and updates to address this challenge first.
+                    </p>
+
+                    <div className="space-y-3">
+                      {challenges.map((challenge) => (
+                        <button
+                          key={challenge}
+                          type="button"
+                          onClick={() => {
+                            setSelectedChallenge(challenge);
+                            setErrorMessage("");
+                          }}
+                          className={`w-full py-3.5 px-4 rounded-lg border text-left text-xs font-semibold tracking-wide transition-all ${
+                            selectedChallenge === challenge
+                              ? 'border-brand-cream bg-brand-cream/10 text-brand-cream shadow-[0_0_15px_rgba(222,219,200,0.1)]'
+                              : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.05] text-brand-ash/80 hover:text-white'
+                          }`}
+                        >
+                          {challenge}
+                        </button>
+                      ))}
+                    </div>
+
+                    {errorMessage && (
+                      <p className="text-red-400 text-xs mt-4 flex items-center gap-1.5 font-medium">
+                        <span>✕</span> {errorMessage}
+                      </p>
+                    )}
+
+                    <div className="mt-8 flex items-center justify-between">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setStep(1);
+                          setErrorMessage("");
+                        }}
+                        className="text-brand-stone hover:text-white text-xs font-semibold py-2"
+                      >
+                        Back
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleSubmit}
+                        disabled={status === "submitting"}
+                        className="bg-brand-cream hover:bg-brand-cream/95 text-black px-6 py-2.5 rounded-full text-xs font-semibold flex items-center gap-1.5 active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
+                      >
+                        {status === "submitting" ? (
+                          <>
+                            <Loader2 size={12} className="animate-spin" />
+                            Finalizing...
+                          </>
+                        ) : (
+                          <>
+                            Finish Setup
+                            <Check size={12} />
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
+        </motion.div>
+      </div>
+    </AnimatePresence>
+  );
+}
+
 export default function App() {
   const [email, setEmail] = useState("");
   const [waitlistStatus, setWaitlistStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState("");
   
   const waitlistRef = useRef<HTMLDivElement>(null);
 
@@ -138,7 +475,12 @@ export default function App() {
       if (response.success) {
         setWaitlistStatus("success");
         setMessage(response.message);
+        setRegisteredEmail(email);
         setEmail("");
+        // Open the beautiful glassmorphic onboarding modal
+        setTimeout(() => {
+          setShowOnboarding(true);
+        }, 1200);
       } else {
         setWaitlistStatus("error");
         setMessage(response.message);
@@ -387,7 +729,7 @@ export default function App() {
                 01 / INDEPENDENT DIRECTIVES
               </span>
               <h2 className="text-brand-ink text-3xl sm:text-4xl font-normal leading-[1.0] letter-tracking-heading-md max-w-md">
-                A creative operating system for independent creators
+                A creative operating system for <span className="font-serif italic text-brand-cream">independent creators</span>
               </h2>
             </div>
             
@@ -665,6 +1007,16 @@ export default function App() {
 
         </div>
       </footer>
+
+      {/* Dynamic Glassmorphic Onboarding Modal */}
+      <OnboardingModal 
+        isOpen={showOnboarding}
+        email={registeredEmail}
+        onClose={() => {
+          setShowOnboarding(false);
+          setWaitlistStatus("idle");
+        }}
+      />
 
     </div>
   );
