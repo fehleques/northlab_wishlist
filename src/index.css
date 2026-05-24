@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #000000;
+  --color-brand-on-primary: #ffffff;
+  --color-brand-canvas: #ffffff;
+  --color-brand-canvas-warm: #faf9f6;
+  --color-brand-hairline: #e5e5e5;
+  --color-brand-hairline-soft: #eaeaea;
+  --color-brand-surface-cool: #f1f3f5;
+  --color-brand-scrim: #0c0d0f;
+  --color-brand-footer: #050505;
+  
+  --color-brand-ink: #111111;
+  --color-brand-ink-soft: #222222;
+  --color-brand-graphite: #555555;
+  --color-brand-slate: #64748b;
+  --color-brand-slate-soft: #94a3b8;
+  --color-brand-stone: #a8a29e;
+  --color-brand-ash: #d6d3d1;
+
+  --font-abc: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --animate-fade-in: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-up: slide-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom resets & smooth layout styles */
+body {
+  font-family: var(--font-abc);
+  background-color: var(--color-brand-canvas);
+  color: var(--color-brand-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tight text tracking styles for editorial branding */
+.letter-tracking-display {
+  letter-spacing: -1.3px;
+}
+.letter-tracking-display-sm {
+  letter-spacing: -1px;
+}
+.letter-tracking-heading-md {
+  letter-spacing: -0.9px;
+}
+.letter-tracking-heading-sm {
+  letter-spacing: -0.4px;
+}
+.letter-tracking-eyebrow {
+  letter-spacing: 0.35px;
+}
+.letter-tracking-micro-caps {
+  letter-spacing: 0.2px;
+}
